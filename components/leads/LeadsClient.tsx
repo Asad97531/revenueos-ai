@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import { AddLeadDialog } from "@/components/leads/AddLeadDialog";
 import { RecentLeadsTable } from "@/components/dashboard/RecentLeadsTable";
 import { leads as initialLeads } from "@/lib/mock-data";
@@ -382,6 +382,29 @@ function convertLeadsToCsv(leads: Lead[]) {
   return csvRows.join("\n");
 }
 
+function parseCsvLine(line: string) {
+  const result: string[] = [];
+  let current = "";
+  let insideQuotes = false;
+
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+
+    if (char === '"') {
+      insideQuotes = !insideQuotes;
+    } else if (char === "," && !insideQuotes) {
+      result.push(current.trim());
+      current = "";
+    } else {
+      current += char;
+    }
+  }
+
+  result.push(current.trim());
+
+  return result.map((item) => item.replace(/^"|"$/g, ""));
+}
+
 export function LeadsClient() {
   const [leads, setLeads] = useState<Lead[]>(initialLeads);
   const [editingLead, setEditingLead] = useState<Lead | null>(null);
@@ -575,6 +598,54 @@ export function LeadsClient() {
     link.click();
 
     URL.revokeObjectURL(url);
+  }
+
+  function importLeadsFromCsv(event: ChangeEvent<HTMLInputElement>) {
+    const input = event.target;
+    const file = input.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const text = String(reader.result);
+      const lines = text
+        .split(/\r?\n/)
+        .map((line) => line.trim())
+        .filter(Boolean);
+
+      if (lines.length < 2) {
+        alert("CSV file is empty or missing lead rows.");
+        input.value = "";
+        return;
+      }
+
+      const rows = lines.slice(1);
+
+      const importedLeads: Lead[] = rows.map((row, index) => {
+        const [company, contact, email, stage, score, value, notes] =
+          parseCsvLine(row);
+
+        return {
+          id: Date.now() + index,
+          company: company || "Imported Company",
+          contact: contact || "Unknown Contact",
+          email: email || "unknown@example.com",
+          stage: stage || "New Lead",
+          score: Number(score) || 70,
+          value: value || "$10K",
+          notes: notes || "",
+        };
+      });
+
+      setLeads((prev) => [...importedLeads, ...prev]);
+      input.value = "";
+    };
+
+    reader.readAsText(file);
   }
 
   async function copyColdEmail(lead: Lead) {
@@ -1036,6 +1107,16 @@ export function LeadsClient() {
             >
               Export CSV
             </button>
+
+            <label className="cursor-pointer rounded-lg border border-cyan-400/30 px-3 py-2 text-xs font-semibold text-cyan-300 hover:bg-cyan-400/10">
+              Import CSV
+              <input
+                type="file"
+                accept=".csv"
+                onChange={importLeadsFromCsv}
+                className="hidden"
+              />
+            </label>
 
             <button
               onClick={resetCrmData}
