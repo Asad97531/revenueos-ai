@@ -1,36 +1,119 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RevenueOS AI
 
-## Getting Started
+RevenueOS AI is a modern CRM and sales pipeline dashboard built with Next.js, TypeScript, and Tailwind CSS.
 
-First, run the development server:
+It helps sales teams manage leads, track pipeline value, prioritize follow-ups, and generate AI-style cold email suggestions.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Add new leads
+- Edit existing leads
+- Delete leads
+- Search leads by company, contact, email, stage, or notes
+- Filter leads by stage and score
+- Sort leads by score, value, and company name
+- Track total leads
+- Track pipeline value
+- Track average lead score
+- Track hot leads
+- View detailed lead profile
+- Add discovery notes
+- Copy lead email
+- Click email address to open mail app
+- Copy AI-generated cold email
+- Open AI cold email as a mail draft
+- AI Action Queue for priority follow-ups
+- Mark AI actions as done
+- Reset completed AI actions
+- Export visible leads as CSV
+- Reset CRM demo data
+- LocalStorage persistence
+- Mobile responsive lead cards
+- Stage summary chips
+- Clickable quick stage filters
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Project Structure
+revenueos-ai/
+├── app/
+│   └── dashboard/
+│       └── page.tsx
+├── components/
+│   ├── dashboard/
+│   │   └── RecentLeadsTable.tsx
+│   ├── leads/
+│   │   ├── AddLeadDialog.tsx
+│   │   └── LeadsClient.tsx
+│   └── ui/
+├── lib/
+│   └── mock-data.ts
+└── README.md
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- LocalStorage
+- shadcn-style UI components
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Screenshots
 
-## Deploy on Vercel
+Add screenshots of your app here.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Example:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```md
+![Dashboard Screenshot](./screenshots/dashboard.png)
+
+Main Pages
+Dashboard
+
+The dashboard shows CRM performance metrics such as:
+
+Total leads
+Pipeline value
+Average score
+Hot leads
+AI action queue
+Recent leads table
+Lead Details
+
+Each lead has a detailed profile with:
+
+Contact information
+Stage
+Deal value
+Notes
+AI lead score
+AI recommendation
+Next best action
+AI cold email
+Why I Built This
+
+I built RevenueOS AI to practice building a real-world SaaS-style dashboard.
+
+The project is designed for a sales or RevOps workflow where teams need to:
+
+Manage leads
+Prioritize follow-ups
+Track pipeline quality
+Generate outreach faster
+Improve sales execution
+Future Improvements
+Real authentication
+Backend database
+AI API integration
+Lead import from CSV
+Team collaboration
+Activity timeline
+Deal forecasting
+CRM integrations
+Analytics charts
+
+Author
+Built by Asad Ali.
+
+
