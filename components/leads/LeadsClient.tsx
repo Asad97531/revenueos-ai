@@ -26,6 +26,12 @@ type LeadFormData = {
   notes: string;
 };
 
+type ActivityItem = {
+  title: string;
+  description: string;
+  status: "Done" | "Active" | "Suggested";
+};
+
 function parseLeadValue(value: string) {
   const cleanValue = value
     .replace(/[$₹,]/g, "")
@@ -285,6 +291,64 @@ function getActionUrgency(lead: Lead) {
   return "Review lead";
 }
 
+function getActivityTimeline(lead: Lead): ActivityItem[] {
+  const timeline: ActivityItem[] = [
+    {
+      title: "Lead added to CRM",
+      description: `${lead.company} was added as a sales opportunity with ${lead.contact} as the main contact.`,
+      status: "Done",
+    },
+    {
+      title: `Stage set to ${lead.stage}`,
+      description: `This lead is currently in the ${lead.stage} stage of the pipeline.`,
+      status: "Active",
+    },
+    {
+      title: `AI score calculated: ${lead.score}/100`,
+      description: `RevenueOS AI reviewed this lead and marked it as ${getLeadPriority(
+        lead
+      )}.`,
+      status: "Done",
+    },
+  ];
+
+  if (lead.notes?.trim()) {
+    timeline.push({
+      title: "Discovery notes captured",
+      description:
+        "Notes have been added for this lead, including context such as pain points, next steps, or qualification details.",
+      status: "Done",
+    });
+  } else {
+    timeline.push({
+      title: "Discovery notes missing",
+      description:
+        "Add notes after a discovery call to make follow-ups more personalized.",
+      status: "Suggested",
+    });
+  }
+
+  timeline.push({
+    title: "Next best action suggested",
+    description: getNextBestAction(lead),
+    status: "Suggested",
+  });
+
+  return timeline;
+}
+
+function getActivityStatusStyles(status: ActivityItem["status"]) {
+  if (status === "Done") {
+    return "border-green-500/30 bg-green-500/10 text-green-300";
+  }
+
+  if (status === "Active") {
+    return "border-cyan-400/30 bg-cyan-400/10 text-cyan-300";
+  }
+
+  return "border-yellow-500/30 bg-yellow-500/10 text-yellow-300";
+}
+
 function convertLeadsToCsv(leads: Lead[]) {
   const headers = [
     "Company",
@@ -326,8 +390,12 @@ export function LeadsClient() {
   const [stageFilter, setStageFilter] = useState("All Stages");
   const [scoreFilter, setScoreFilter] = useState("All Scores");
   const [hasLoadedLeads, setHasLoadedLeads] = useState(false);
-  const [completedActionLeadIds, setCompletedActionLeadIds] = useState<number[]>([]);
-  const [copiedEmailLeadId, setCopiedEmailLeadId] = useState<number | null>(null);
+  const [completedActionLeadIds, setCompletedActionLeadIds] = useState<
+    number[]
+  >([]);
+  const [copiedEmailLeadId, setCopiedEmailLeadId] = useState<number | null>(
+    null
+  );
 
   useEffect(() => {
     try {
@@ -391,7 +459,9 @@ export function LeadsClient() {
 
   const filteredLeads = leads.filter((lead) => {
     const matchesSearch =
-      `${lead.company} ${lead.contact} ${lead.email} ${lead.stage} ${lead.notes ?? ""}`
+      `${lead.company} ${lead.contact} ${lead.email} ${lead.stage} ${
+        lead.notes ?? ""
+      }`
         .toLowerCase()
         .includes(searchQuery.toLowerCase());
 
@@ -445,9 +515,7 @@ export function LeadsClient() {
 
   function updateLead(updatedLead: Lead) {
     setLeads((prev) =>
-      prev.map((lead) =>
-        lead.id === updatedLead.id ? updatedLead : lead
-      )
+      prev.map((lead) => (lead.id === updatedLead.id ? updatedLead : lead))
     );
 
     if (selectedLead?.id === updatedLead.id) {
@@ -704,7 +772,7 @@ export function LeadsClient() {
               </h2>
 
               <p className="mt-2 text-slate-400">
-                Detailed CRM profile, notes, and AI recommendation for this lead.
+                Detailed CRM profile, notes, activity timeline, and AI recommendation for this lead.
               </p>
             </div>
 
@@ -764,6 +832,59 @@ export function LeadsClient() {
                 ? selectedLead.notes
                 : "No notes added yet. Click Edit to add discovery notes, pain points, next steps, or decision-maker context."}
             </p>
+          </div>
+
+          <div className="mt-4 rounded-xl border border-slate-800 bg-slate-950 p-5">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <p className="text-xs uppercase tracking-widest text-slate-500">
+                  Activity Timeline
+                </p>
+                <h3 className="mt-2 text-lg font-bold text-white">
+                  Latest lead activity
+                </h3>
+              </div>
+
+              <span className="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-400">
+                Auto-generated
+              </span>
+            </div>
+
+            <div className="mt-5 space-y-4">
+              {getActivityTimeline(selectedLead).map((activity, index) => (
+                <div key={activity.title} className="flex gap-4">
+                  <div className="flex flex-col items-center">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full border border-cyan-400/30 bg-cyan-400/10 text-xs font-bold text-cyan-300">
+                      {index + 1}
+                    </div>
+
+                    {index !== getActivityTimeline(selectedLead).length - 1 && (
+                      <div className="h-full w-px bg-slate-800" />
+                    )}
+                  </div>
+
+                  <div className="flex-1 rounded-xl border border-slate-800 bg-slate-900 p-4">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <h4 className="font-semibold text-white">
+                        {activity.title}
+                      </h4>
+
+                      <span
+                        className={`rounded-full border px-3 py-1 text-xs font-semibold ${getActivityStatusStyles(
+                          activity.status
+                        )}`}
+                      >
+                        {activity.status}
+                      </span>
+                    </div>
+
+                    <p className="mt-2 text-sm leading-6 text-slate-400">
+                      {activity.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="mt-4 rounded-xl border border-slate-800 bg-slate-950 p-4">
@@ -834,7 +955,9 @@ export function LeadsClient() {
                   onClick={() => copyColdEmail(selectedLead)}
                   className="rounded-lg bg-cyan-400 px-3 py-2 text-xs font-semibold text-slate-950 hover:bg-cyan-300"
                 >
-                  {copiedEmailLeadId === selectedLead.id ? "Copied" : "Copy Email"}
+                  {copiedEmailLeadId === selectedLead.id
+                    ? "Copied"
+                    : "Copy Email"}
                 </button>
 
                 <button
@@ -890,7 +1013,9 @@ export function LeadsClient() {
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <p className="text-sm text-slate-400">
             Showing{" "}
-            <span className="font-semibold text-white">{filteredLeads.length}</span>{" "}
+            <span className="font-semibold text-white">
+              {filteredLeads.length}
+            </span>{" "}
             of <span className="font-semibold text-white">{leads.length}</span>{" "}
             leads
           </p>
