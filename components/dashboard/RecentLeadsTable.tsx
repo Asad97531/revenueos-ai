@@ -1,9 +1,4 @@
-const leads = [
-  { company: "Stripe", score: 95, stage: "Demo Scheduled", value: "$42K" },
-  { company: "Linear", score: 91, stage: "Qualified", value: "$28K" },
-  { company: "Notion", score: 88, stage: "Discovery", value: "$35K" },
-  { company: "Rippling", score: 84, stage: "New Lead", value: "$19K" },
-];
+import { leads } from "@/lib/mock-data";
 
 export function RecentLeadsTable() {
   return (
@@ -15,6 +10,7 @@ export function RecentLeadsTable() {
           <thead className="bg-slate-950 text-slate-400">
             <tr>
               <th className="px-4 py-3">Company</th>
+              <th className="px-4 py-3">Contact</th>
               <th className="px-4 py-3">Score</th>
               <th className="px-4 py-3">Stage</th>
               <th className="px-4 py-3">Value</th>
@@ -23,8 +19,14 @@ export function RecentLeadsTable() {
 
           <tbody>
             {leads.map((lead) => (
-              <tr key={lead.company} className="border-t border-slate-800 text-slate-300">
-                <td className="px-4 py-4 font-medium text-white">{lead.company}</td>
+              <tr
+                key={lead.id}
+                className="border-t border-slate-800 text-slate-300"
+              >
+                <td className="px-4 py-4 font-medium text-white">
+                  {lead.company}
+                </td>
+                <td className="px-4 py-4">{lead.contact}</td>
                 <td className="px-4 py-4">{lead.score}</td>
                 <td className="px-4 py-4">{lead.stage}</td>
                 <td className="px-4 py-4">{lead.value}</td>
