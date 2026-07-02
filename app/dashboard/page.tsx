@@ -2,6 +2,7 @@ import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { AIRecommendations } from "@/components/dashboard/AIRecommendations";
 import { RecentLeadsTable } from "@/components/dashboard/RecentLeadsTable";
+import { leads } from "@/lib/mock-data";
 
 export default function DashboardPage() {
   return (
@@ -49,7 +50,7 @@ export default function DashboardPage() {
         <AIRecommendations />
       </div>
       <div className="mt-8">
-        <RecentLeadsTable />
+        <RecentLeadsTable leads={leads} />
       </div>
     </DashboardLayout>
   );
