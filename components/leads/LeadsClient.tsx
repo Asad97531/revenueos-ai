@@ -1118,6 +1118,14 @@ export function LeadsClient() {
               />
             </label>
 
+            <a
+              href="/sample-leads.csv"
+              download
+              className="rounded-lg border border-slate-700 px-3 py-2 text-xs font-semibold text-slate-300 hover:bg-slate-800"
+            >
+              Download Sample CSV
+            </a>
+
             <button
               onClick={resetCrmData}
               className="rounded-lg border border-red-500/30 px-3 py-2 text-xs font-semibold text-red-300 hover:bg-red-500/10"
