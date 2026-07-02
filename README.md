@@ -32,24 +32,11 @@ It helps sales teams manage leads, track pipeline value, prioritize follow-ups, 
 - Stage summary chips
 - Clickable quick stage filters
 
-Project Structure
 
-revenueos-ai/
-├── app/
-│   └── dashboard/
-│       └── page.tsx
-├── components/
-│   ├── dashboard/
-│   │   └── RecentLeadsTable.tsx
-│   ├── leads/
-│   │   ├── AddLeadDialog.tsx
-│   │   └── LeadsClient.tsx
-│   └── ui/
-├── lib/
-│   └── mock-data.ts
-└── README.md
+## Live Demo
 
-
+- [Home Page](https://revenueos-ai-seven.vercel.app/)
+- [CRM Dashboard](https://revenueos-ai-seven.vercel.app/dashboard)
 
 ## Tech Stack
 
