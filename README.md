@@ -33,6 +33,7 @@ It helps sales teams manage leads, track pipeline value, prioritize follow-ups, 
 - Clickable quick stage filters
 
 Project Structure
+
 revenueos-ai/
 ├── app/
 │   └── dashboard/
@@ -60,13 +61,11 @@ revenueos-ai/
 - shadcn-style UI components
 
 ## Screenshots
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/d91dcfe4-66d9-442e-8d1b-a2b701bca80d" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/c2d97e74-6072-457a-8175-c869f067c3f2" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/ad52d0cb-1b4f-4eff-b921-c411851fc5cc" />
 
-Add screenshots of your app here.
 
-Example:
-
-```md
-![Dashboard Screenshot](./screenshots/dashboard.png)
 
 Main Pages
 Dashboard
