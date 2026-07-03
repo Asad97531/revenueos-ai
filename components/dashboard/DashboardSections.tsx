@@ -10,6 +10,7 @@ import { ExecutiveSummary } from "@/components/dashboard/ExecutiveSummary";
 import { FeatureChecklist } from "@/components/dashboard/FeatureChecklist";
 import { FollowUpReminders } from "@/components/dashboard/FollowUpReminders";
 import { ICPBreakdown } from "@/components/dashboard/ICPBreakdown";
+import { MetricsExplanation } from "@/components/dashboard/MetricsExplanation";
 import { PipelineHealth } from "@/components/dashboard/PipelineHealth";
 import { PortfolioCTA } from "@/components/dashboard/PortfolioCTA";
 import { ProductRoadmap } from "@/components/dashboard/ProductRoadmap";
@@ -56,6 +57,10 @@ export function DashboardSections() {
 
       <section id="skills-demonstrated" className="scroll-mt-8">
         <SkillsDemonstrated />
+      </section>
+
+      <section id="metrics-explanation" className="scroll-mt-8">
+        <MetricsExplanation />
       </section>
 
       <section id="product-roadmap" className="scroll-mt-8">

@@ -39,6 +39,11 @@ const navItems = [
     id: "skills-demonstrated",
   },
   {
+    label: "Metrics",
+    href: "#metrics-explanation",
+    id: "metrics-explanation",
+  },
+  {
     label: "Roadmap",
     href: "#product-roadmap",
     id: "product-roadmap",
