@@ -83,11 +83,7 @@ export function ProductRoadmap() {
       </div>
 
       <div className="mt-6 rounded-xl border border-slate-800 bg-slate-950 p-5">
-        <p className="text-sm font-semibold text-white">
-          Future development note
-        </p>
-
-        <p className="mt-2 text-sm leading-6 text-slate-400">
+        <p className="text-sm leading-6 text-slate-400">
           The current version is built as a frontend CRM demo. Future
           improvements could include authentication, a production database, real
           AI generation, and CRM integrations to make it closer to a full SaaS
