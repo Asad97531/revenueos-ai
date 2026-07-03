@@ -3,6 +3,7 @@ import { AIRecommendations } from "@/components/dashboard/AIRecommendations";
 import { ConversionFunnel } from "@/components/dashboard/ConversionFunnel";
 import { DashboardNav } from "@/components/dashboard/DashboardNav";
 import { ExecutiveSummary } from "@/components/dashboard/ExecutiveSummary";
+import { FeatureChecklist } from "@/components/dashboard/FeatureChecklist";
 import { FollowUpReminders } from "@/components/dashboard/FollowUpReminders";
 import { ICPBreakdown } from "@/components/dashboard/ICPBreakdown";
 import { PipelineHealth } from "@/components/dashboard/PipelineHealth";
@@ -30,6 +31,10 @@ export function DashboardSections() {
 
       <section id="project-highlights" className="scroll-mt-8">
         <ProjectHighlights />
+      </section>
+
+      <section id="feature-checklist" className="scroll-mt-8">
+        <FeatureChecklist />
       </section>
 
       <section id="sales-workflow" className="scroll-mt-8">
