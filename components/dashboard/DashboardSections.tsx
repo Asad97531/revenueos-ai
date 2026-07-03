@@ -1,6 +1,7 @@
 import { AccountInsights } from "@/components/dashboard/AccountInsights";
 import { AIRecommendations } from "@/components/dashboard/AIRecommendations";
 import { ConversionFunnel } from "@/components/dashboard/ConversionFunnel";
+import { DashboardFooter } from "@/components/dashboard/DashboardFooter";
 import { DashboardNav } from "@/components/dashboard/DashboardNav";
 import { DemoDataNotice } from "@/components/dashboard/DemoDataNotice";
 import { DemoGuide } from "@/components/dashboard/DemoGuide";
@@ -96,6 +97,8 @@ export function DashboardSections() {
       </section>
 
       <PortfolioCTA />
+
+      <DashboardFooter />
     </div>
   );
 }
