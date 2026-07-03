@@ -2,6 +2,7 @@ import { AccountInsights } from "@/components/dashboard/AccountInsights";
 import { AIRecommendations } from "@/components/dashboard/AIRecommendations";
 import { ConversionFunnel } from "@/components/dashboard/ConversionFunnel";
 import { DashboardNav } from "@/components/dashboard/DashboardNav";
+import { DemoDataNotice } from "@/components/dashboard/DemoDataNotice";
 import { DemoGuide } from "@/components/dashboard/DemoGuide";
 import { ExecutiveSummary } from "@/components/dashboard/ExecutiveSummary";
 import { FeatureChecklist } from "@/components/dashboard/FeatureChecklist";
@@ -29,6 +30,10 @@ export function DashboardSections() {
       <div id="summary" className="scroll-mt-8">
         <ExecutiveSummary />
       </div>
+
+      <section id="demo-data" className="scroll-mt-8">
+        <DemoDataNotice />
+      </section>
 
       <QuickActions />
 

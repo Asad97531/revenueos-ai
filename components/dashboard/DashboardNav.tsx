@@ -8,6 +8,10 @@ const navItems = [
     href: "#summary",
   },
   {
+    label: "Demo Data",
+    href: "#demo-data",
+  },
+  {
     label: "Highlights",
     href: "#project-highlights",
   },
