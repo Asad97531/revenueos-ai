@@ -9,6 +9,7 @@ import { PipelineHealth } from "@/components/dashboard/PipelineHealth";
 import { QuickActions } from "@/components/dashboard/QuickActions";
 import { RevenueForecast } from "@/components/dashboard/RevenueForecast";
 import { SalesPerformance } from "@/components/dashboard/SalesPerformance";
+import { SalesWorkflow } from "@/components/dashboard/SalesWorkflow";
 import { StatCards } from "@/components/dashboard/StatCards";
 import { TechStackOverview } from "@/components/dashboard/TechStackOverview";
 import { LeadsClient } from "@/components/leads/LeadsClient";
@@ -25,6 +26,10 @@ export function DashboardSections() {
       </div>
 
       <QuickActions />
+
+      <section id="sales-workflow" className="scroll-mt-8">
+        <SalesWorkflow />
+      </section>
 
       <div id="pipeline-health" className="scroll-mt-8">
         <PipelineHealth />
