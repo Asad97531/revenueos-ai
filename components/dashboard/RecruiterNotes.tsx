@@ -72,9 +72,7 @@ export function RecruiterNotes() {
 
       <div className="mt-6 grid gap-4 lg:grid-cols-[0.8fr_1.2fr]">
         <div className="rounded-xl border border-slate-800 bg-slate-950 p-5">
-          <p className="text-sm font-semibold text-white">
-            Best-fit roles
-          </p>
+          <p className="text-sm font-semibold text-white">Best-fit roles</p>
 
           <div className="mt-4 flex flex-wrap gap-2">
             {roleFitItems.map((role) => (
@@ -89,15 +87,11 @@ export function RecruiterNotes() {
         </div>
 
         <div className="rounded-xl border border-green-500/20 bg-green-500/5 p-5">
-          <p className="text-sm font-semibold text-white">
-            Interview talking point
-          </p>
-
-          <p className="mt-3 text-sm leading-6 text-slate-400">
-            “I built RevenueOS AI to combine my sales interest with technical
+          <p className="text-sm leading-6 text-slate-400">
+            RevenueOS AI combines sales workflow thinking with technical
             execution. The project simulates how a RevOps team can import leads,
             score accounts, prioritize follow-ups, review pipeline health, and
-            use AI-style insights to move deals forward.”
+            use AI-style insights to move deals forward.
           </p>
         </div>
       </div>
