@@ -28,6 +28,10 @@ const navItems = [
     href: "#account-insights",
   },
   {
+    label: "Tech Stack",
+    href: "#tech-stack",
+  },
+  {
     label: "CRM",
     href: "#crm-workspace",
   },
@@ -43,7 +47,8 @@ export function DashboardNav() {
           </p>
 
           <p className="mt-1 text-xs text-slate-400">
-            Jump to key revenue, forecast, account, and CRM sections.
+            Jump to key revenue, forecast, account, tech stack, and CRM
+            sections.
           </p>
         </div>
 
