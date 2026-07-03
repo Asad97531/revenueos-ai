@@ -20,6 +20,7 @@ import { RecruiterNotes } from "@/components/dashboard/RecruiterNotes";
 import { RevenueForecast } from "@/components/dashboard/RevenueForecast";
 import { SalesPerformance } from "@/components/dashboard/SalesPerformance";
 import { SalesWorkflow } from "@/components/dashboard/SalesWorkflow";
+import { SkillsDemonstrated } from "@/components/dashboard/SkillsDemonstrated";
 import { StatCards } from "@/components/dashboard/StatCards";
 import { TechStackOverview } from "@/components/dashboard/TechStackOverview";
 import { LeadsClient } from "@/components/leads/LeadsClient";
@@ -51,6 +52,10 @@ export function DashboardSections() {
 
       <section id="case-study" className="scroll-mt-8">
         <CaseStudySnapshot />
+      </section>
+
+      <section id="skills-demonstrated" className="scroll-mt-8">
+        <SkillsDemonstrated />
       </section>
 
       <section id="product-roadmap" className="scroll-mt-8">

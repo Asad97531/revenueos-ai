@@ -34,6 +34,11 @@ const navItems = [
     id: "case-study",
   },
   {
+    label: "Skills",
+    href: "#skills-demonstrated",
+    id: "skills-demonstrated",
+  },
+  {
     label: "Roadmap",
     href: "#product-roadmap",
     id: "product-roadmap",
