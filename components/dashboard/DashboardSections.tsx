@@ -1,5 +1,6 @@
 import { AccountInsights } from "@/components/dashboard/AccountInsights";
 import { AIRecommendations } from "@/components/dashboard/AIRecommendations";
+import { CaseStudySnapshot } from "@/components/dashboard/CaseStudySnapshot";
 import { ConversionFunnel } from "@/components/dashboard/ConversionFunnel";
 import { DashboardFooter } from "@/components/dashboard/DashboardFooter";
 import { DashboardNav } from "@/components/dashboard/DashboardNav";
@@ -11,6 +12,7 @@ import { FollowUpReminders } from "@/components/dashboard/FollowUpReminders";
 import { ICPBreakdown } from "@/components/dashboard/ICPBreakdown";
 import { PipelineHealth } from "@/components/dashboard/PipelineHealth";
 import { PortfolioCTA } from "@/components/dashboard/PortfolioCTA";
+import { ProductRoadmap } from "@/components/dashboard/ProductRoadmap";
 import { ProjectHighlights } from "@/components/dashboard/ProjectHighlights";
 import { ProjectLinks } from "@/components/dashboard/ProjectLinks";
 import { QuickActions } from "@/components/dashboard/QuickActions";
@@ -45,6 +47,14 @@ export function DashboardSections() {
 
       <section id="recruiter-notes" className="scroll-mt-8">
         <RecruiterNotes />
+      </section>
+
+      <section id="case-study" className="scroll-mt-8">
+        <CaseStudySnapshot />
+      </section>
+
+      <section id="product-roadmap" className="scroll-mt-8">
+        <ProductRoadmap />
       </section>
 
       <section id="feature-checklist" className="scroll-mt-8">

@@ -29,6 +29,11 @@ const navItems = [
     id: "recruiter-notes",
   },
   {
+    label: "Case Study",
+    href: "#case-study",
+    id: "case-study",
+  },
+  {
     label: "Roadmap",
     href: "#product-roadmap",
     id: "product-roadmap",
