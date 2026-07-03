@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 
 const navItems = [
   {
@@ -27,6 +27,11 @@ const navItems = [
     label: "Recruiter Notes",
     href: "#recruiter-notes",
     id: "recruiter-notes",
+  },
+  {
+    label: "Roadmap",
+    href: "#product-roadmap",
+    id: "product-roadmap",
   },
   {
     label: "Features",
@@ -134,6 +139,26 @@ export function DashboardNav() {
     }
   }, [activeSection]);
 
+  function handleNavClick(event: MouseEvent<HTMLAnchorElement>, id: string) {
+    event.preventDefault();
+
+    const section = document.getElementById(id);
+
+    if (!section) {
+      return;
+    }
+
+    const topOffset = id === "top" ? 0 : section.offsetTop - 120;
+
+    window.scrollTo({
+      top: topOffset,
+      behavior: "smooth",
+    });
+
+    window.history.replaceState(null, "", `#${id}`);
+    setActiveSection(id);
+  }
+
   return (
     <section className="sticky top-6 z-20 rounded-2xl border border-slate-800 bg-slate-900/95 p-4 shadow-2xl shadow-slate-950/40 backdrop-blur">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
@@ -147,7 +172,7 @@ export function DashboardNav() {
           </p>
         </div>
 
-        <div className="flex gap-2 overflow-x-auto pb-1">
+        <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {navItems.map((item) => {
             const isActive = activeSection === item.id;
 
@@ -158,6 +183,7 @@ export function DashboardNav() {
                   navButtonRefs.current[item.id] = element;
                 }}
                 href={item.href}
+                onClick={(event) => handleNavClick(event, item.id)}
                 className={`whitespace-nowrap rounded-full border px-4 py-2 text-xs font-semibold transition ${
                   isActive
                     ? "border-cyan-400 bg-cyan-400 text-slate-950"
