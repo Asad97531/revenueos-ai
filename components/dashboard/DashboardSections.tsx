@@ -14,6 +14,7 @@ import { PortfolioCTA } from "@/components/dashboard/PortfolioCTA";
 import { ProjectHighlights } from "@/components/dashboard/ProjectHighlights";
 import { ProjectLinks } from "@/components/dashboard/ProjectLinks";
 import { QuickActions } from "@/components/dashboard/QuickActions";
+import { RecruiterNotes } from "@/components/dashboard/RecruiterNotes";
 import { RevenueForecast } from "@/components/dashboard/RevenueForecast";
 import { SalesPerformance } from "@/components/dashboard/SalesPerformance";
 import { SalesWorkflow } from "@/components/dashboard/SalesWorkflow";
@@ -40,6 +41,10 @@ export function DashboardSections() {
 
       <section id="project-highlights" className="scroll-mt-8">
         <ProjectHighlights />
+      </section>
+
+      <section id="recruiter-notes" className="scroll-mt-8">
+        <RecruiterNotes />
       </section>
 
       <section id="feature-checklist" className="scroll-mt-8">

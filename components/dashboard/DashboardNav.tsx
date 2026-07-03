@@ -24,6 +24,11 @@ const navItems = [
     id: "project-highlights",
   },
   {
+    label: "Recruiter Notes",
+    href: "#recruiter-notes",
+    id: "recruiter-notes",
+  },
+  {
     label: "Features",
     href: "#feature-checklist",
     id: "feature-checklist",
