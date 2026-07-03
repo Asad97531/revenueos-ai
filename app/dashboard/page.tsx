@@ -1,4 +1,5 @@
 import { AIRecommendations } from "@/components/dashboard/AIRecommendations";
+import { FollowUpReminders } from "@/components/dashboard/FollowUpReminders";
 import { PipelineHealth } from "@/components/dashboard/PipelineHealth";
 import { RevenueForecast } from "@/components/dashboard/RevenueForecast";
 import { LeadsClient } from "@/components/leads/LeadsClient";
@@ -66,6 +67,8 @@ export default function DashboardPage() {
           <PipelineHealth />
 
           <RevenueForecast />
+
+          <FollowUpReminders />
 
           <AIRecommendations />
 
