@@ -8,6 +8,7 @@ import { FeatureChecklist } from "@/components/dashboard/FeatureChecklist";
 import { FollowUpReminders } from "@/components/dashboard/FollowUpReminders";
 import { ICPBreakdown } from "@/components/dashboard/ICPBreakdown";
 import { PipelineHealth } from "@/components/dashboard/PipelineHealth";
+import { PortfolioCTA } from "@/components/dashboard/PortfolioCTA";
 import { ProjectHighlights } from "@/components/dashboard/ProjectHighlights";
 import { ProjectLinks } from "@/components/dashboard/ProjectLinks";
 import { QuickActions } from "@/components/dashboard/QuickActions";
@@ -88,6 +89,8 @@ export function DashboardSections() {
       <section id="crm-workspace" className="scroll-mt-8">
         <LeadsClient />
       </section>
+
+      <PortfolioCTA />
     </div>
   );
 }
