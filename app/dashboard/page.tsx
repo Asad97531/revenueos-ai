@@ -1,3 +1,4 @@
+import { AccountInsights } from "@/components/dashboard/AccountInsights";
 import { AIRecommendations } from "@/components/dashboard/AIRecommendations";
 import { ConversionFunnel } from "@/components/dashboard/ConversionFunnel";
 import { FollowUpReminders } from "@/components/dashboard/FollowUpReminders";
@@ -75,6 +76,8 @@ export default function DashboardPage() {
           <FollowUpReminders />
 
           <SalesPerformance />
+
+          <AccountInsights />
 
           <AIRecommendations />
 
