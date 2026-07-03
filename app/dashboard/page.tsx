@@ -9,6 +9,7 @@ import { PipelineHealth } from "@/components/dashboard/PipelineHealth";
 import { QuickActions } from "@/components/dashboard/QuickActions";
 import { RevenueForecast } from "@/components/dashboard/RevenueForecast";
 import { SalesPerformance } from "@/components/dashboard/SalesPerformance";
+import { StatCards } from "@/components/dashboard/StatCards";
 import { LeadsClient } from "@/components/leads/LeadsClient";
 
 export default function DashboardPage() {
@@ -37,39 +38,7 @@ export default function DashboardPage() {
         </div>
 
         <div className="space-y-8">
-          <section className="grid gap-4 md:grid-cols-4">
-            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-              <p className="text-sm text-slate-400">Pipeline Value</p>
-              <p className="mt-2 text-3xl font-bold text-white">₹1.8Cr</p>
-              <p className="mt-1 text-xs text-slate-500">
-                Demo revenue pipeline
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-              <p className="text-sm text-slate-400">Active Leads</p>
-              <p className="mt-2 text-3xl font-bold text-white">24</p>
-              <p className="mt-1 text-xs text-slate-500">
-                Open opportunities
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-              <p className="text-sm text-slate-400">Average Score</p>
-              <p className="mt-2 text-3xl font-bold text-white">78</p>
-              <p className="mt-1 text-xs text-slate-500">
-                Lead quality average
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-              <p className="text-sm text-slate-400">Hot Leads</p>
-              <p className="mt-2 text-3xl font-bold text-white">9</p>
-              <p className="mt-1 text-xs text-slate-500">
-                High intent accounts
-              </p>
-            </div>
-          </section>
+          <StatCards />
 
           <DashboardNav />
 
