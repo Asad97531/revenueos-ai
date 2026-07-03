@@ -39,6 +39,15 @@ It helps sales teams manage leads, track pipeline value, prioritize follow-ups, 
 - Mobile responsive lead cards
 - Stage summary chips
 - Clickable quick stage filters
+- Live demo
+- Dashboard link
+- Features
+- Tech stack
+- How to run locally
+- Project sections
+- CSV import/export
+- Future roadmap
+- Screenshots section
 
 ## Tech Stack
 
