@@ -1,6 +1,7 @@
 import { AccountInsights } from "@/components/dashboard/AccountInsights";
 import { AIRecommendations } from "@/components/dashboard/AIRecommendations";
 import { ConversionFunnel } from "@/components/dashboard/ConversionFunnel";
+import { DashboardNav } from "@/components/dashboard/DashboardNav";
 import { ExecutiveSummary } from "@/components/dashboard/ExecutiveSummary";
 import { FollowUpReminders } from "@/components/dashboard/FollowUpReminders";
 import { ICPBreakdown } from "@/components/dashboard/ICPBreakdown";
@@ -70,21 +71,37 @@ export default function DashboardPage() {
             </div>
           </section>
 
-          <ExecutiveSummary />
+          <DashboardNav />
+
+          <div id="summary" className="scroll-mt-8">
+            <ExecutiveSummary />
+          </div>
 
           <QuickActions />
 
-          <PipelineHealth />
+          <div id="pipeline-health" className="scroll-mt-8">
+            <PipelineHealth />
+          </div>
 
-          <RevenueForecast />
+          <div id="revenue-forecast" className="scroll-mt-8">
+            <RevenueForecast />
+          </div>
 
-          <ConversionFunnel />
+          <div id="conversion-funnel" className="scroll-mt-8">
+            <ConversionFunnel />
+          </div>
 
-          <FollowUpReminders />
+          <div id="follow-ups" className="scroll-mt-8">
+            <FollowUpReminders />
+          </div>
 
-          <SalesPerformance />
+          <div id="sales-performance" className="scroll-mt-8">
+            <SalesPerformance />
+          </div>
 
-          <AccountInsights />
+          <div id="account-insights" className="scroll-mt-8">
+            <AccountInsights />
+          </div>
 
           <section id="ai-insights" className="scroll-mt-8">
             <ICPBreakdown />
