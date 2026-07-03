@@ -1,5 +1,9 @@
 const navItems = [
   {
+    label: "Top",
+    href: "#top",
+  },
+  {
     label: "Summary",
     href: "#summary",
   },
@@ -59,7 +63,7 @@ const navItems = [
 
 export function DashboardNav() {
   return (
-    <section className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+    <section className="sticky top-4 z-20 rounded-2xl border border-slate-800 bg-slate-900/95 p-4 shadow-2xl shadow-slate-950/40 backdrop-blur">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <p className="text-sm font-semibold text-white">
@@ -67,8 +71,7 @@ export function DashboardNav() {
           </p>
 
           <p className="mt-1 text-xs text-slate-400">
-            Jump to summary, highlights, features, demo guide, links, workflow,
-            revenue, tech stack, and CRM sections.
+            Sticky shortcuts for reviewing the full RevenueOS AI dashboard.
           </p>
         </div>
 
