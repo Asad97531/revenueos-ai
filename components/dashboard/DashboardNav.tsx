@@ -4,6 +4,10 @@ const navItems = [
     href: "#summary",
   },
   {
+    label: "Highlights",
+    href: "#project-highlights",
+  },
+  {
     label: "Workflow",
     href: "#sales-workflow",
   },
@@ -51,8 +55,8 @@ export function DashboardNav() {
           </p>
 
           <p className="mt-1 text-xs text-slate-400">
-            Jump to key workflow, revenue, forecast, account, tech stack, and
-            CRM sections.
+            Jump to project highlights, workflow, revenue, account, tech stack,
+            and CRM sections.
           </p>
         </div>
 
