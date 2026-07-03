@@ -1,9 +1,11 @@
 import { AccountInsights } from "@/components/dashboard/AccountInsights";
 import { AIRecommendations } from "@/components/dashboard/AIRecommendations";
 import { ConversionFunnel } from "@/components/dashboard/ConversionFunnel";
+import { ExecutiveSummary } from "@/components/dashboard/ExecutiveSummary";
 import { FollowUpReminders } from "@/components/dashboard/FollowUpReminders";
 import { ICPBreakdown } from "@/components/dashboard/ICPBreakdown";
 import { PipelineHealth } from "@/components/dashboard/PipelineHealth";
+import { QuickActions } from "@/components/dashboard/QuickActions";
 import { RevenueForecast } from "@/components/dashboard/RevenueForecast";
 import { SalesPerformance } from "@/components/dashboard/SalesPerformance";
 import { LeadsClient } from "@/components/leads/LeadsClient";
@@ -68,6 +70,10 @@ export default function DashboardPage() {
             </div>
           </section>
 
+          <ExecutiveSummary />
+
+          <QuickActions />
+
           <PipelineHealth />
 
           <RevenueForecast />
@@ -80,11 +86,15 @@ export default function DashboardPage() {
 
           <AccountInsights />
 
-          <ICPBreakdown />
+          <section id="ai-insights" className="scroll-mt-8">
+            <ICPBreakdown />
+          </section>
 
           <AIRecommendations />
 
-          <LeadsClient />
+          <section id="crm-workspace" className="scroll-mt-8">
+            <LeadsClient />
+          </section>
         </div>
       </div>
     </main>
