@@ -14,64 +14,14 @@ const navItems = [
     id: "summary",
   },
   {
-    label: "Demo Data",
-    href: "#demo-data",
-    id: "demo-data",
-  },
-  {
     label: "Highlights",
     href: "#project-highlights",
     id: "project-highlights",
   },
   {
-    label: "Recruiter Notes",
-    href: "#recruiter-notes",
-    id: "recruiter-notes",
-  },
-  {
-    label: "Case Study",
-    href: "#case-study",
-    id: "case-study",
-  },
-  {
-    label: "Skills",
-    href: "#skills-demonstrated",
-    id: "skills-demonstrated",
-  },
-  {
-    label: "Metrics",
-    href: "#metrics-explanation",
-    id: "metrics-explanation",
-  },
-  {
-    label: "Quality",
-    href: "#quality-checklist",
-    id: "quality-checklist",
-  },
-  {
-    label: "Roadmap",
-    href: "#product-roadmap",
-    id: "product-roadmap",
-  },
-  {
-    label: "Features",
-    href: "#feature-checklist",
-    id: "feature-checklist",
-  },
-  {
-    label: "Demo Guide",
+    label: "Demo",
     href: "#demo-guide",
     id: "demo-guide",
-  },
-  {
-    label: "Links",
-    href: "#project-links",
-    id: "project-links",
-  },
-  {
-    label: "Workflow",
-    href: "#sales-workflow",
-    id: "sales-workflow",
   },
   {
     label: "Pipeline",
@@ -79,29 +29,9 @@ const navItems = [
     id: "pipeline-health",
   },
   {
-    label: "Forecast",
-    href: "#revenue-forecast",
-    id: "revenue-forecast",
-  },
-  {
-    label: "Funnel",
-    href: "#conversion-funnel",
-    id: "conversion-funnel",
-  },
-  {
-    label: "Reminders",
-    href: "#follow-ups",
-    id: "follow-ups",
-  },
-  {
-    label: "Performance",
-    href: "#sales-performance",
-    id: "sales-performance",
-  },
-  {
-    label: "Accounts",
-    href: "#account-insights",
-    id: "account-insights",
+    label: "CRM",
+    href: "#crm-workspace",
+    id: "crm-workspace",
   },
   {
     label: "Tech Stack",
@@ -109,9 +39,9 @@ const navItems = [
     id: "tech-stack",
   },
   {
-    label: "CRM",
-    href: "#crm-workspace",
-    id: "crm-workspace",
+    label: "Links",
+    href: "#project-links",
+    id: "project-links",
   },
 ];
 
@@ -188,7 +118,7 @@ export function DashboardNav() {
           </p>
 
           <p className="mt-1 text-xs text-slate-400">
-            Sticky shortcuts with active section highlighting.
+            Quick shortcuts for reviewing the main portfolio sections.
           </p>
         </div>
 
