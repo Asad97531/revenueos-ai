@@ -2,6 +2,7 @@ import { AccountInsights } from "@/components/dashboard/AccountInsights";
 import { AIRecommendations } from "@/components/dashboard/AIRecommendations";
 import { ConversionFunnel } from "@/components/dashboard/ConversionFunnel";
 import { DashboardNav } from "@/components/dashboard/DashboardNav";
+import { DemoGuide } from "@/components/dashboard/DemoGuide";
 import { ExecutiveSummary } from "@/components/dashboard/ExecutiveSummary";
 import { FeatureChecklist } from "@/components/dashboard/FeatureChecklist";
 import { FollowUpReminders } from "@/components/dashboard/FollowUpReminders";
@@ -35,6 +36,10 @@ export function DashboardSections() {
 
       <section id="feature-checklist" className="scroll-mt-8">
         <FeatureChecklist />
+      </section>
+
+      <section id="demo-guide" className="scroll-mt-8">
+        <DemoGuide />
       </section>
 
       <section id="sales-workflow" className="scroll-mt-8">

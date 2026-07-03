@@ -12,6 +12,10 @@ const navItems = [
     href: "#feature-checklist",
   },
   {
+    label: "Demo Guide",
+    href: "#demo-guide",
+  },
+  {
     label: "Workflow",
     href: "#sales-workflow",
   },
@@ -59,8 +63,8 @@ export function DashboardNav() {
           </p>
 
           <p className="mt-1 text-xs text-slate-400">
-            Jump to summary, highlights, features, workflow, revenue, account,
-            tech stack, and CRM sections.
+            Jump to summary, highlights, features, demo guide, workflow,
+            revenue, tech stack, and CRM sections.
           </p>
         </div>
 
