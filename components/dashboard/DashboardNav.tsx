@@ -16,6 +16,10 @@ const navItems = [
     href: "#demo-guide",
   },
   {
+    label: "Links",
+    href: "#project-links",
+  },
+  {
     label: "Workflow",
     href: "#sales-workflow",
   },
@@ -63,7 +67,7 @@ export function DashboardNav() {
           </p>
 
           <p className="mt-1 text-xs text-slate-400">
-            Jump to summary, highlights, features, demo guide, workflow,
+            Jump to summary, highlights, features, demo guide, links, workflow,
             revenue, tech stack, and CRM sections.
           </p>
         </div>

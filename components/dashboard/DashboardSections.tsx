@@ -9,6 +9,7 @@ import { FollowUpReminders } from "@/components/dashboard/FollowUpReminders";
 import { ICPBreakdown } from "@/components/dashboard/ICPBreakdown";
 import { PipelineHealth } from "@/components/dashboard/PipelineHealth";
 import { ProjectHighlights } from "@/components/dashboard/ProjectHighlights";
+import { ProjectLinks } from "@/components/dashboard/ProjectLinks";
 import { QuickActions } from "@/components/dashboard/QuickActions";
 import { RevenueForecast } from "@/components/dashboard/RevenueForecast";
 import { SalesPerformance } from "@/components/dashboard/SalesPerformance";
@@ -40,6 +41,10 @@ export function DashboardSections() {
 
       <section id="demo-guide" className="scroll-mt-8">
         <DemoGuide />
+      </section>
+
+      <section id="project-links" className="scroll-mt-8">
+        <ProjectLinks />
       </section>
 
       <section id="sales-workflow" className="scroll-mt-8">
