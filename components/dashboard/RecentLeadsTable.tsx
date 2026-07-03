@@ -30,53 +30,50 @@ function getScoreLabel(score: number) {
 
 function getScoreStyles(score: number) {
   if (score >= 80) {
-    return "bg-red-500/10 text-red-300 border-red-500/30";
+    return "border-red-400/30 bg-red-500/10 text-red-200";
   }
 
   if (score >= 70) {
-    return "bg-yellow-500/10 text-yellow-300 border-yellow-500/30";
+    return "border-yellow-400/30 bg-yellow-500/10 text-yellow-200";
   }
 
-  return "bg-slate-800 text-slate-300 border-slate-700";
+  return "border-white/10 bg-white/5 text-slate-300";
 }
 
 function getStageStyles(stage: string) {
   if (stage === "New Lead") {
-    return "border-slate-700 bg-slate-800/80 text-slate-300";
+    return "border-white/10 bg-white/5 text-slate-300";
   }
 
   if (stage === "Qualified") {
-    return "border-blue-500/30 bg-blue-500/10 text-blue-300";
+    return "border-blue-400/30 bg-blue-500/10 text-blue-200";
   }
 
   if (stage === "Proposal") {
-    return "border-purple-500/30 bg-purple-500/10 text-purple-300";
+    return "border-purple-400/30 bg-purple-500/10 text-purple-200";
   }
 
   if (stage === "Negotiation") {
-    return "border-orange-500/30 bg-orange-500/10 text-orange-300";
+    return "border-orange-400/30 bg-orange-500/10 text-orange-200";
   }
 
   if (stage === "Closed") {
-    return "border-green-500/30 bg-green-500/10 text-green-300";
+    return "border-green-400/30 bg-green-500/10 text-green-200";
   }
 
-  return "border-slate-700 bg-slate-800 text-slate-300";
+  return "border-white/10 bg-white/5 text-slate-300";
 }
 
 function getActiveChipStyles(stage: string, activeStage: string) {
   if (stage === activeStage) {
-    return "ring-2 ring-cyan-400/60 ring-offset-2 ring-offset-slate-900";
+    return "border-cyan-300/50 bg-cyan-400/15 text-cyan-200 ring-2 ring-cyan-300/40";
   }
 
-  return "opacity-80 hover:opacity-100";
+  return "border-white/10 bg-white/5 text-slate-300 hover:border-cyan-300/30 hover:text-cyan-200";
 }
 
 function parseLeadValue(value: string) {
-  const cleanValue = value
-    .replace(/[$₹,]/g, "")
-    .trim()
-    .toLowerCase();
+  const cleanValue = value.replace(/[$₹,]/g, "").trim().toLowerCase();
 
   const numberMatch = cleanValue.match(/\d+(\.\d+)?/);
 
@@ -127,6 +124,88 @@ function getNotesPreview(notes?: string) {
   }
 
   return notes;
+}
+
+function getClayStatus(lead: Lead) {
+  if (lead.score >= 80) {
+    return "Enriched";
+  }
+
+  if (lead.score >= 70) {
+    return "Needs Review";
+  }
+
+  return "Research Pending";
+}
+
+function getClayStatusStyles(lead: Lead) {
+  if (lead.score >= 80) {
+    return "border-green-400/30 bg-green-500/10 text-green-200";
+  }
+
+  if (lead.score >= 70) {
+    return "border-yellow-400/30 bg-yellow-500/10 text-yellow-200";
+  }
+
+  return "border-white/10 bg-white/5 text-slate-300";
+}
+
+function getTriggerFound(lead: Lead) {
+  const notes = lead.notes?.toLowerCase() ?? "";
+
+  if (notes.includes("hiring") || notes.includes("recruit")) {
+    return "Hiring Signal";
+  }
+
+  if (notes.includes("funding") || notes.includes("raised")) {
+    return "Funding News";
+  }
+
+  if (lead.score >= 85) {
+    return "High Intent Visit";
+  }
+
+  if (lead.stage === "Proposal") {
+    return "Proposal Follow-up";
+  }
+
+  if (lead.stage === "Negotiation") {
+    return "Active Deal Signal";
+  }
+
+  if (lead.stage === "Closed") {
+    return "Expansion Opportunity";
+  }
+
+  return "Needs Claygent Research";
+}
+
+function getNextAction(lead: Lead) {
+  if (lead.score >= 85 && lead.stage !== "Closed") {
+    return "Send Slack alert";
+  }
+
+  if (lead.stage === "New Lead") {
+    return "Enrich in Clay";
+  }
+
+  if (lead.stage === "Qualified") {
+    return "Create HubSpot task";
+  }
+
+  if (lead.stage === "Proposal") {
+    return "Follow up proposal";
+  }
+
+  if (lead.stage === "Negotiation") {
+    return "Confirm blockers";
+  }
+
+  if (lead.stage === "Closed") {
+    return "Plan expansion";
+  }
+
+  return "Review account";
 }
 
 export function RecentLeadsTable({
@@ -208,28 +287,36 @@ export function RecentLeadsTable({
   }
 
   return (
-    <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+    <div className="rounded-3xl border border-white/10 bg-slate-950/60 p-6 shadow-2xl backdrop-blur-md">
+      <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
         <div>
-          <h2 className="text-xl font-bold text-white">Recent Leads</h2>
-          <p className="mt-1 text-sm text-slate-400">
-            View, edit, sort, and manage your sales pipeline.
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300">
+            HubSpot Workspace
+          </p>
+
+          <h2 className="mt-2 text-2xl font-bold text-white">
+            GTM Lead Routing
+          </h2>
+
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-300">
+            Clay-enriched accounts connected to HubSpot stages, buying triggers,
+            and next-best actions for the sales team.
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          <p className="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-400">
+          <p className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-slate-300">
             {sortedLeads.length} shown
           </p>
 
-          <p className="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-400">
+          <p className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-slate-300">
             {leads.length} total
           </p>
 
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-xs font-semibold text-slate-300 outline-none"
+            className="rounded-xl border border-white/10 bg-slate-950/80 px-3 py-2 text-xs font-semibold text-slate-200 outline-none transition hover:border-cyan-300/30"
           >
             <option>Highest Score</option>
             <option>Lowest Score</option>
@@ -240,10 +327,10 @@ export function RecentLeadsTable({
         </div>
       </div>
 
-      <div className="mt-5 flex flex-wrap gap-2">
+      <div className="mt-6 flex flex-wrap gap-2">
         <button
           onClick={() => setActiveStage("All")}
-          className={`rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-300 transition ${getActiveChipStyles(
+          className={`rounded-full border px-3 py-1 text-xs font-semibold transition ${getActiveChipStyles(
             "All",
             activeStage
           )}`}
@@ -255,9 +342,10 @@ export function RecentLeadsTable({
           <button
             key={item.stage}
             onClick={() => setActiveStage(item.stage)}
-            className={`rounded-full border px-3 py-1 text-xs font-semibold transition ${getStageStyles(
-              item.stage
-            )} ${getActiveChipStyles(item.stage, activeStage)}`}
+            className={`rounded-full border px-3 py-1 text-xs font-semibold transition ${getActiveChipStyles(
+              item.stage,
+              activeStage
+            )}`}
           >
             {item.stage}: {item.count}
           </button>
@@ -265,15 +353,15 @@ export function RecentLeadsTable({
       </div>
 
       {sortedLeads.length === 0 ? (
-        <div className="mt-5 rounded-xl border border-slate-800 bg-slate-950 p-8 text-center">
-          <p className="text-sm text-slate-500">
+        <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-8 text-center">
+          <p className="text-sm text-slate-400">
             No leads found for this quick filter.
           </p>
 
           {activeStage !== "All" && (
             <button
               onClick={() => setActiveStage("All")}
-              className="mt-3 rounded-lg bg-cyan-400 px-3 py-2 text-xs font-semibold text-slate-950 hover:bg-cyan-300"
+              className="mt-3 rounded-xl bg-cyan-400 px-4 py-2 text-xs font-semibold text-slate-950 transition hover:bg-cyan-300"
             >
               Show All Leads
             </button>
@@ -281,17 +369,18 @@ export function RecentLeadsTable({
         </div>
       ) : (
         <>
-          <div className="mt-5 hidden overflow-hidden rounded-xl border border-slate-800 md:block">
+          <div className="mt-6 hidden overflow-hidden rounded-2xl border border-white/10 md:block">
             <table className="w-full text-left text-sm">
-              <thead className="bg-slate-950 text-slate-400">
+              <thead className="bg-white/5 text-xs uppercase tracking-wider text-slate-400">
                 <tr>
-                  <th className="px-4 py-3">Company</th>
-                  <th className="px-4 py-3">Contact</th>
-                  <th className="px-4 py-3">Score</th>
-                  <th className="px-4 py-3">Stage</th>
-                  <th className="px-4 py-3">Value</th>
-                  <th className="px-4 py-3">Notes</th>
-                  <th className="px-4 py-3">Actions</th>
+                  <th className="px-4 py-4">Company</th>
+                  <th className="px-4 py-4">Contact</th>
+                  <th className="px-4 py-4">ICP Score</th>
+                  <th className="px-4 py-4">Clay Status</th>
+                  <th className="px-4 py-4">Trigger</th>
+                  <th className="px-4 py-4">HubSpot Stage</th>
+                  <th className="px-4 py-4">Next Action</th>
+                  <th className="px-4 py-4">Actions</th>
                 </tr>
               </thead>
 
@@ -299,27 +388,32 @@ export function RecentLeadsTable({
                 {sortedLeads.map((lead) => (
                   <tr
                     key={lead.id}
-                    className="border-t border-slate-800 text-slate-300"
+                    className="border-t border-white/10 text-slate-300 transition hover:bg-white/[0.03]"
                   >
-                    <td className="px-4 py-4 font-medium text-white">
-                      {lead.company}
+                    <td className="px-4 py-4">
+                      <p className="font-semibold text-white">{lead.company}</p>
+                      <p className="mt-1 text-xs text-slate-500">
+                        Deal value: {lead.value}
+                      </p>
                     </td>
 
                     <td className="px-4 py-4">
                       <div>
-                        <p>{lead.contact}</p>
+                        <p className="font-medium text-slate-200">
+                          {lead.contact}
+                        </p>
 
                         <div className="mt-1 flex flex-wrap items-center gap-2">
                           <a
                             href={`mailto:${lead.email}`}
-                            className="text-xs text-cyan-400 hover:text-cyan-300"
+                            className="text-xs text-cyan-300 hover:text-cyan-200"
                           >
                             {lead.email}
                           </a>
 
                           <button
                             onClick={() => copyEmail(lead)}
-                            className="rounded-md border border-slate-700 px-2 py-0.5 text-[10px] font-semibold text-slate-400 hover:bg-slate-800 hover:text-white"
+                            className="rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-semibold text-slate-300 transition hover:border-cyan-300/30 hover:text-cyan-200"
                           >
                             {copiedEmailLeadId === lead.id
                               ? "Copied"
@@ -331,23 +425,37 @@ export function RecentLeadsTable({
 
                     <td className="px-4 py-4">
                       <div className="w-36">
-                        <div className="flex items-center justify-between gap-2">
-                          <span
-                            className={`rounded-full border px-3 py-1 text-xs font-semibold ${getScoreStyles(
-                              lead.score
-                            )}`}
-                          >
-                            {lead.score} · {getScoreLabel(lead.score)}
-                          </span>
-                        </div>
+                        <span
+                          className={`rounded-full border px-3 py-1 text-xs font-semibold ${getScoreStyles(
+                            lead.score
+                          )}`}
+                        >
+                          {lead.score} · {getScoreLabel(lead.score)}
+                        </span>
 
-                        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-800">
+                        <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10">
                           <div
-                            className="h-full rounded-full bg-cyan-400"
+                            className="h-full rounded-full bg-cyan-300"
                             style={{ width: `${lead.score}%` }}
                           />
                         </div>
                       </div>
+                    </td>
+
+                    <td className="px-4 py-4">
+                      <span
+                        className={`rounded-full border px-3 py-1 text-xs font-semibold ${getClayStatusStyles(
+                          lead
+                        )}`}
+                      >
+                        {getClayStatus(lead)}
+                      </span>
+                    </td>
+
+                    <td className="px-4 py-4">
+                      <span className="text-xs font-semibold text-slate-200">
+                        {getTriggerFound(lead)}
+                      </span>
                     </td>
 
                     <td className="px-4 py-4">
@@ -360,39 +468,31 @@ export function RecentLeadsTable({
                       </span>
                     </td>
 
-                    <td className="px-4 py-4 font-semibold text-white">
-                      {lead.value}
-                    </td>
-
                     <td className="px-4 py-4">
-                      {lead.notes?.trim() ? (
-                        <span className="rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-300">
-                          Notes added
-                        </span>
-                      ) : (
-                        <span className="text-xs text-slate-600">No notes</span>
-                      )}
+                      <span className="text-xs font-semibold text-cyan-300">
+                        {getNextAction(lead)}
+                      </span>
                     </td>
 
                     <td className="px-4 py-4">
                       <div className="flex flex-wrap gap-2">
                         <button
                           onClick={() => onView(lead)}
-                          className="rounded-lg bg-slate-700 px-3 py-1 text-xs font-semibold text-white hover:bg-slate-600"
+                          className="rounded-lg border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-white transition hover:border-cyan-300/30 hover:bg-cyan-400/10"
                         >
                           View
                         </button>
 
                         <button
                           onClick={() => onEdit(lead)}
-                          className="rounded-lg bg-blue-600 px-3 py-1 text-xs font-semibold text-white hover:bg-blue-500"
+                          className="rounded-lg bg-blue-500/80 px-3 py-1 text-xs font-semibold text-white transition hover:bg-blue-400"
                         >
                           Edit
                         </button>
 
                         <button
                           onClick={() => handleDelete(lead)}
-                          className="rounded-lg bg-red-600 px-3 py-1 text-xs font-semibold text-white hover:bg-red-500"
+                          className="rounded-lg bg-red-500/80 px-3 py-1 text-xs font-semibold text-white transition hover:bg-red-400"
                         >
                           Delete
                         </button>
@@ -404,30 +504,30 @@ export function RecentLeadsTable({
             </table>
           </div>
 
-          <div className="mt-5 grid gap-4 md:hidden">
+          <div className="mt-6 grid gap-4 md:hidden">
             {sortedLeads.map((lead) => (
               <div
                 key={lead.id}
-                className="rounded-xl border border-slate-800 bg-slate-950 p-4"
+                className="rounded-2xl border border-white/10 bg-white/5 p-4"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <h3 className="font-semibold text-white">{lead.company}</h3>
-                    <p className="mt-1 text-sm text-slate-400">
+                    <p className="mt-1 text-sm text-slate-300">
                       {lead.contact}
                     </p>
 
                     <div className="mt-1 flex flex-wrap items-center gap-2">
                       <a
                         href={`mailto:${lead.email}`}
-                        className="text-xs text-cyan-400 hover:text-cyan-300"
+                        className="text-xs text-cyan-300 hover:text-cyan-200"
                       >
                         {lead.email}
                       </a>
 
                       <button
                         onClick={() => copyEmail(lead)}
-                        className="rounded-md border border-slate-700 px-2 py-0.5 text-[10px] font-semibold text-slate-400 hover:bg-slate-800 hover:text-white"
+                        className="rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-semibold text-slate-300 transition hover:border-cyan-300/30 hover:text-cyan-200"
                       >
                         {copiedEmailLeadId === lead.id ? "Copied" : "Copy"}
                       </button>
@@ -443,7 +543,15 @@ export function RecentLeadsTable({
                       lead.score
                     )}`}
                   >
-                    Score {lead.score} · {getScoreLabel(lead.score)}
+                    ICP {lead.score} · {getScoreLabel(lead.score)}
+                  </span>
+
+                  <span
+                    className={`rounded-full border px-3 py-1 text-xs font-semibold ${getClayStatusStyles(
+                      lead
+                    )}`}
+                  >
+                    {getClayStatus(lead)}
                   </span>
 
                   <span
@@ -451,25 +559,37 @@ export function RecentLeadsTable({
                       lead.stage
                     )}`}
                   >
-                    {lead.stage}
+                    HubSpot: {lead.stage}
                   </span>
-
-                  {lead.notes?.trim() && (
-                    <span className="rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-300">
-                      Notes added
-                    </span>
-                  )}
                 </div>
 
-                <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-slate-800">
+                <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10">
                   <div
-                    className="h-full rounded-full bg-cyan-400"
+                    className="h-full rounded-full bg-cyan-300"
                     style={{ width: `${lead.score}%` }}
                   />
                 </div>
 
+                <div className="mt-4 rounded-2xl border border-white/10 bg-slate-950/40 p-3">
+                  <p className="text-xs uppercase tracking-widest text-slate-500">
+                    Trigger
+                  </p>
+                  <p className="mt-2 text-sm font-semibold text-slate-200">
+                    {getTriggerFound(lead)}
+                  </p>
+                </div>
+
+                <div className="mt-3 rounded-2xl border border-cyan-300/20 bg-cyan-400/10 p-3">
+                  <p className="text-xs uppercase tracking-widest text-cyan-300">
+                    Next Action
+                  </p>
+                  <p className="mt-2 text-sm font-semibold text-white">
+                    {getNextAction(lead)}
+                  </p>
+                </div>
+
                 {lead.notes?.trim() && (
-                  <p className="mt-4 rounded-xl border border-slate-800 bg-slate-900 p-3 text-xs leading-5 text-slate-400">
+                  <p className="mt-4 rounded-2xl border border-white/10 bg-slate-950/40 p-3 text-xs leading-5 text-slate-300">
                     {getNotesPreview(lead.notes)}
                   </p>
                 )}
@@ -477,21 +597,21 @@ export function RecentLeadsTable({
                 <div className="mt-4 grid grid-cols-3 gap-2">
                   <button
                     onClick={() => onView(lead)}
-                    className="rounded-lg bg-slate-700 px-3 py-2 text-xs font-semibold text-white hover:bg-slate-600"
+                    className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white transition hover:border-cyan-300/30 hover:bg-cyan-400/10"
                   >
                     View
                   </button>
 
                   <button
                     onClick={() => onEdit(lead)}
-                    className="rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold text-white hover:bg-blue-500"
+                    className="rounded-lg bg-blue-500/80 px-3 py-2 text-xs font-semibold text-white transition hover:bg-blue-400"
                   >
                     Edit
                   </button>
 
                   <button
                     onClick={() => handleDelete(lead)}
-                    className="rounded-lg bg-red-600 px-3 py-2 text-xs font-semibold text-white hover:bg-red-500"
+                    className="rounded-lg bg-red-500/80 px-3 py-2 text-xs font-semibold text-white transition hover:bg-red-400"
                   >
                     Delete
                   </button>
