@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const navItems = [
   {
@@ -87,6 +87,7 @@ const navItems = [
 
 export function DashboardNav() {
   const [activeSection, setActiveSection] = useState("top");
+  const navButtonRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
 
   useEffect(() => {
     function updateActiveSection() {
@@ -116,6 +117,18 @@ export function DashboardNav() {
     };
   }, []);
 
+  useEffect(() => {
+    const activeButton = navButtonRefs.current[activeSection];
+
+    if (activeButton) {
+      activeButton.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest",
+      });
+    }
+  }, [activeSection]);
+
   return (
     <section className="sticky top-6 z-20 rounded-2xl border border-slate-800 bg-slate-900/95 p-4 shadow-2xl shadow-slate-950/40 backdrop-blur">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
@@ -136,6 +149,9 @@ export function DashboardNav() {
             return (
               <a
                 key={item.href}
+                ref={(element) => {
+                  navButtonRefs.current[item.id] = element;
+                }}
                 href={item.href}
                 className={`whitespace-nowrap rounded-full border px-4 py-2 text-xs font-semibold transition ${
                   isActive
