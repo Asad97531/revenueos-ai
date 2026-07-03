@@ -16,6 +16,7 @@ import { PortfolioCTA } from "@/components/dashboard/PortfolioCTA";
 import { ProductRoadmap } from "@/components/dashboard/ProductRoadmap";
 import { ProjectHighlights } from "@/components/dashboard/ProjectHighlights";
 import { ProjectLinks } from "@/components/dashboard/ProjectLinks";
+import { QualityChecklist } from "@/components/dashboard/QualityChecklist";
 import { QuickActions } from "@/components/dashboard/QuickActions";
 import { RecruiterNotes } from "@/components/dashboard/RecruiterNotes";
 import { RevenueForecast } from "@/components/dashboard/RevenueForecast";
@@ -61,6 +62,10 @@ export function DashboardSections() {
 
       <section id="metrics-explanation" className="scroll-mt-8">
         <MetricsExplanation />
+      </section>
+
+      <section id="quality-checklist" className="scroll-mt-8">
+        <QualityChecklist />
       </section>
 
       <section id="product-roadmap" className="scroll-mt-8">

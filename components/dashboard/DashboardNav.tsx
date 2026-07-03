@@ -44,6 +44,11 @@ const navItems = [
     id: "metrics-explanation",
   },
   {
+    label: "Quality",
+    href: "#quality-checklist",
+    id: "quality-checklist",
+  },
+  {
     label: "Roadmap",
     href: "#product-roadmap",
     id: "product-roadmap",
