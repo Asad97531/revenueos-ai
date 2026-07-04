@@ -33,10 +33,7 @@ type ActivityItem = {
 };
 
 function parseLeadValue(value: string) {
-  const cleanValue = value
-    .replace(/[$₹,]/g, "")
-    .trim()
-    .toLowerCase();
+  const cleanValue = value.replace(/[$₹,]/g, "").trim().toLowerCase();
 
   const numberMatch = cleanValue.match(/\d+(\.\d+)?/);
 
@@ -123,62 +120,100 @@ function formatPipelineValue(value: number, useIndianCurrency: boolean) {
 
 function getLeadPriority(lead: Lead) {
   if (lead.score >= 85) {
-    return "High Priority";
+    return "Tier 1 GTM Account";
   }
 
   if (lead.score >= 70) {
-    return "Medium Priority";
+    return "Tier 2 Review Account";
   }
 
-  return "Low Priority";
+  return "Nurture Account";
+}
+
+function getTriggerType(lead: Lead) {
+  const notes = lead.notes?.toLowerCase() ?? "";
+
+  if (notes.includes("hiring") || notes.includes("recruit")) {
+    return "Hiring trigger";
+  }
+
+  if (notes.includes("funding") || notes.includes("raised")) {
+    return "Funding trigger";
+  }
+
+  if (lead.score >= 85) {
+    return "High-intent signal";
+  }
+
+  if (lead.stage === "Proposal") {
+    return "Proposal follow-up";
+  }
+
+  if (lead.stage === "Negotiation") {
+    return "Active deal signal";
+  }
+
+  if (lead.stage === "Closed") {
+    return "Expansion signal";
+  }
+
+  return "Needs Claygent research";
 }
 
 function getAiInsight(lead: Lead) {
   if (lead.score >= 85 && lead.stage === "Proposal") {
-    return `${lead.company} is a strong opportunity. The lead score is high and the deal is already in proposal stage, so this should be followed up quickly.`;
+    return `${lead.company} is a high-fit GTM opportunity. The account has a strong ICP score and is already in proposal stage, so the workflow should trigger a fast follow-up and HubSpot task.`;
   }
 
-  if (lead.score >= 80) {
-    return `${lead.company} looks like a hot lead. The score shows strong buying intent, so this lead should not be left idle.`;
+  if (lead.score >= 85) {
+    return `${lead.company} should be routed as a hot lead. The ICP score is strong, so Make.com should trigger a Slack alert and create a HubSpot follow-up task.`;
+  }
+
+  if (lead.score >= 70) {
+    return `${lead.company} is a good-fit account that needs sales review. Clay enrichment should be checked and the account should be qualified before creating a deal.`;
   }
 
   if (lead.stage === "Negotiation") {
-    return `${lead.company} is close to conversion. Focus on removing objections, confirming budget, and creating urgency.`;
+    return `${lead.company} is close to conversion. The next step is to confirm blockers, decision timeline, and deal value inside HubSpot.`;
   }
 
   if (lead.stage === "New Lead") {
-    return `${lead.company} is still early in the pipeline. The next step should be qualification and discovery.`;
+    return `${lead.company} is early in the GTM workflow. The next step is Clay enrichment, trigger research, and ICP scoring.`;
   }
 
   if (lead.stage === "Closed") {
-    return `${lead.company} is already closed. This account can be used for expansion, referral, or upsell opportunities.`;
+    return `${lead.company} is already closed. This account can be used for expansion, referrals, onboarding, or customer success follow-up.`;
   }
 
-  return `${lead.company} needs more qualification. Gather more information about pain points, budget, timeline, and decision makers.`;
+  return `${lead.company} needs more qualification. Use Claygent to research company signals, buyer context, and personalized outreach angles.`;
 }
 
 function getNextBestAction(lead: Lead) {
+  if (lead.score >= 85 && lead.stage !== "Closed") {
+    return "Send Slack alert, create HubSpot task, and prioritize same-day follow-up.";
+  }
+
   if (lead.stage === "New Lead") {
-    return "Send a discovery email and ask for a short qualification call.";
+    return "Run Clay enrichment and use Claygent to research news, hiring triggers, and buyer context.";
   }
 
   if (lead.stage === "Qualified") {
-    return "Book a demo and connect the product value to their main business problem.";
+    return "Create a HubSpot task and prepare a personalized outreach message.";
   }
 
   if (lead.stage === "Proposal") {
-    return "Follow up on the proposal and ask if there are any blockers.";
+    return "Follow up on the proposal and update the HubSpot deal timeline.";
   }
 
   if (lead.stage === "Negotiation") {
-    return "Confirm final requirements, pricing concerns, and decision timeline.";
+    return "Confirm final blockers, pricing concerns, and decision timeline.";
   }
 
   if (lead.stage === "Closed") {
-    return "Plan an onboarding check-in and look for expansion opportunities.";
+    return "Plan onboarding, expansion, or referral workflow.";
   }
 
-  return "Review the lead and decide the next sales activity.";
+  return "Review the account and decide the next GTM action.";
 }
 
 function getColdEmailSubject(lead: Lead) {
@@ -201,11 +236,11 @@ function getColdEmail(lead: Lead) {
   if (lead.stage === "New Lead") {
     return `Hi ${lead.contact},
 
-I noticed ${lead.company} could be a good fit for a revenue workflow improvement.
+I noticed ${lead.company} could be a strong fit for a GTM workflow improvement.
 
-Many teams at this stage are trying to manage leads, follow-ups, and pipeline visibility without losing speed.
+Many teams at this stage are trying to improve lead research, routing, and follow-up speed without adding more manual work.
 
-Would you be open to a quick 15-minute call this week to see if there is a fit?
+Would you be open to a quick 15-minute conversation this week?
 
 Best,
 Asad`;
@@ -214,9 +249,9 @@ Asad`;
   if (lead.stage === "Qualified") {
     return `Hi ${lead.contact},
 
-Based on what we know about ${lead.company}, it looks like there may be a strong opportunity to improve pipeline visibility and follow-up execution.
+Based on what we know about ${lead.company}, there may be a strong opportunity to improve how your team prioritizes and routes high-fit leads.
 
-Since this lead is already qualified, the next step would be to map your current sales process and identify where RevenueOS AI can save time.
+The next step would be to map your current GTM workflow and identify where enrichment, automation, or HubSpot tracking can save time.
 
 Would you be available for a short demo this week?
 
@@ -277,7 +312,7 @@ Asad`;
 
 function getActionUrgency(lead: Lead) {
   if (lead.score >= 85 && lead.stage !== "Closed") {
-    return "Act today";
+    return "Route now";
   }
 
   if (lead.stage === "Negotiation" || lead.stage === "Proposal") {
@@ -285,51 +320,57 @@ function getActionUrgency(lead: Lead) {
   }
 
   if (lead.stage === "New Lead") {
-    return "Qualify lead";
+    return "Research in Clay";
   }
 
-  return "Review lead";
+  return "Review account";
 }
 
 function getActivityTimeline(lead: Lead): ActivityItem[] {
   const timeline: ActivityItem[] = [
     {
-      title: "Lead added to CRM",
-      description: `${lead.company} was added as a sales opportunity with ${lead.contact} as the main contact.`,
+      title: "Lead captured",
+      description: `${lead.company} entered the GTM workflow with ${lead.contact} as the main contact.`,
       status: "Done",
     },
     {
-      title: `Stage set to ${lead.stage}`,
-      description: `This lead is currently in the ${lead.stage} stage of the pipeline.`,
+      title: "HubSpot stage assigned",
+      description: `This account is currently tracked in the ${lead.stage} stage.`,
       status: "Active",
     },
     {
-      title: `AI score calculated: ${lead.score}/100`,
-      description: `RevenueOS AI reviewed this lead and marked it as ${getLeadPriority(
+      title: `ICP score calculated: ${lead.score}/100`,
+      description: `RevenueOS AI marked this account as ${getLeadPriority(
         lead
       )}.`,
       status: "Done",
+    },
+    {
+      title: `Trigger type: ${getTriggerType(lead)}`,
+      description:
+        "The workflow uses trigger context to decide whether to create a task, send a Slack alert, or continue research.",
+      status: "Active",
     },
   ];
 
   if (lead.notes?.trim()) {
     timeline.push({
-      title: "Discovery notes captured",
+      title: "Research notes captured",
       description:
         "Notes have been added for this lead, including context such as pain points, next steps, or qualification details.",
       status: "Done",
     });
   } else {
     timeline.push({
-      title: "Discovery notes missing",
+      title: "Claygent research missing",
       description:
-        "Add notes after a discovery call to make follow-ups more personalized.",
+        "Add notes after Claygent research to make follow-ups more personalized.",
       status: "Suggested",
     });
   }
 
   timeline.push({
-    title: "Next best action suggested",
+    title: "Next-best action suggested",
     description: getNextBestAction(lead),
     status: "Suggested",
   });
@@ -339,14 +380,14 @@ function getActivityTimeline(lead: Lead): ActivityItem[] {
 
 function getActivityStatusStyles(status: ActivityItem["status"]) {
   if (status === "Done") {
-    return "border-green-500/30 bg-green-500/10 text-green-300";
+    return "border-green-400/30 bg-green-500/10 text-green-200";
   }
 
   if (status === "Active") {
-    return "border-cyan-400/30 bg-cyan-400/10 text-cyan-300";
+    return "border-cyan-300/30 bg-cyan-400/10 text-cyan-200";
   }
 
-  return "border-yellow-500/30 bg-yellow-500/10 text-yellow-300";
+  return "border-yellow-400/30 bg-yellow-500/10 text-yellow-200";
 }
 
 function convertLeadsToCsv(leads: Lead[]) {
@@ -354,10 +395,10 @@ function convertLeadsToCsv(leads: Lead[]) {
     "Company",
     "Contact",
     "Email",
-    "Stage",
-    "Score",
-    "Value",
-    "Notes",
+    "HubSpot Stage",
+    "ICP Score",
+    "Deal Value",
+    "Research Notes",
   ];
 
   const rows = leads.map((lead) => [
@@ -570,7 +611,7 @@ export function LeadsClient() {
 
   function resetCrmData() {
     const confirmed = window.confirm(
-      "Are you sure you want to reset CRM data? This will restore the original demo leads and clear completed AI actions."
+      "Are you sure you want to reset GTM workspace data? This will restore the original demo leads and clear completed automation actions."
     );
 
     if (!confirmed) {
@@ -594,7 +635,7 @@ export function LeadsClient() {
 
     const link = document.createElement("a");
     link.href = url;
-    link.download = "revenueos-leads.csv";
+    link.download = "revenueos-gtm-leads.csv";
     link.click();
 
     URL.revokeObjectURL(url);
@@ -670,80 +711,92 @@ export function LeadsClient() {
 
   return (
     <>
-      <div className="flex items-start justify-between gap-6">
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-widest text-cyan-400">
-            CRM
-          </p>
-
-          <h1 className="mt-3 text-4xl font-bold">Leads</h1>
-
-          <p className="mt-3 text-slate-400">
-            Manage inbound leads, qualification scores, deal stages, and pipeline value.
-          </p>
-        </div>
-
-        <AddLeadDialog
-          onAddLead={addLead}
-          editingLead={editingLead}
-          onUpdateLead={updateLead}
-          onCloseEdit={() => setEditingLead(null)}
-        />
-      </div>
-
-      <div className="mt-8 grid gap-4 md:grid-cols-4">
-        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-          <p className="text-sm text-slate-400">Total Leads</p>
-          <p className="mt-2 text-3xl font-bold text-white">{totalLeads}</p>
-          <p className="mt-1 text-xs text-slate-500">All CRM records</p>
-        </div>
-
-        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-          <p className="text-sm text-slate-400">Pipeline Value</p>
-          <p className="mt-2 text-3xl font-bold text-white">
-            {formatPipelineValue(pipelineValue, useIndianCurrency)}
-          </p>
-          <p className="mt-1 text-xs text-slate-500">Total deal value</p>
-        </div>
-
-        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-          <p className="text-sm text-slate-400">Average Score</p>
-          <p className="mt-2 text-3xl font-bold text-white">{averageScore}</p>
-          <p className="mt-1 text-xs text-slate-500">Lead quality average</p>
-        </div>
-
-        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-          <p className="text-sm text-slate-400">Hot Leads</p>
-          <p className="mt-2 text-3xl font-bold text-white">{hotLeads}</p>
-          <p className="mt-1 text-xs text-slate-500">Score 80 or above</p>
-        </div>
-      </div>
-
-      <div className="mt-8 rounded-2xl border border-cyan-400/20 bg-cyan-400/5 p-6">
-        <div className="flex items-start justify-between gap-4">
+      <div className="rounded-3xl border border-white/10 bg-slate-950/60 p-6 shadow-2xl backdrop-blur-md lg:p-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-widest text-cyan-400">
-              AI Action Queue
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300">
+              HubSpot GTM Workspace
             </p>
 
-            <h2 className="mt-2 text-2xl font-bold text-white">
-              Leads needing attention
-            </h2>
+            <h1 className="mt-2 text-3xl font-bold text-white md:text-4xl">
+              Enriched leads, routing, and next-best actions
+            </h1>
 
-            <p className="mt-2 text-sm text-slate-400">
-              RevenueOS AI is prioritizing your best follow-up opportunities.
+            <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-300">
+              Manage Clay-enriched leads, ICP scores, HubSpot stages, pipeline
+              value, and Make.com-style action routing from one workspace.
             </p>
           </div>
 
-          <div className="flex flex-col items-end gap-2">
-            <span className="rounded-full border border-cyan-400/30 px-3 py-1 text-xs font-semibold text-cyan-300">
-              Sprint 3
+          <AddLeadDialog
+            onAddLead={addLead}
+            editingLead={editingLead}
+            onUpdateLead={updateLead}
+            onCloseEdit={() => setEditingLead(null)}
+          />
+        </div>
+
+        <div className="mt-8 grid gap-4 md:grid-cols-4">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <p className="text-sm text-slate-400">GTM Records</p>
+            <p className="mt-2 text-3xl font-bold text-white">{totalLeads}</p>
+            <p className="mt-1 text-xs text-slate-500">
+              Contacts in workspace
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <p className="text-sm text-slate-400">HubSpot Pipeline</p>
+            <p className="mt-2 text-3xl font-bold text-white">
+              {formatPipelineValue(pipelineValue, useIndianCurrency)}
+            </p>
+            <p className="mt-1 text-xs text-slate-500">Total demo deal value</p>
+          </div>
+
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <p className="text-sm text-slate-400">Avg ICP Score</p>
+            <p className="mt-2 text-3xl font-bold text-white">
+              {averageScore}
+            </p>
+            <p className="mt-1 text-xs text-slate-500">
+              Account fit average
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <p className="text-sm text-slate-400">High ICP Leads</p>
+            <p className="mt-2 text-3xl font-bold text-white">{hotLeads}</p>
+            <p className="mt-1 text-xs text-slate-500">Score 80 or above</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-8 rounded-3xl border border-cyan-300/20 bg-cyan-400/10 p-6 shadow-2xl backdrop-blur-md">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300">
+              Make.com Action Queue
+            </p>
+
+            <h2 className="mt-2 text-2xl font-bold text-white">
+              Accounts that need routing now
+            </h2>
+
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-300">
+              RevenueOS AI prioritizes the best follow-up opportunities based on
+              ICP score, HubSpot stage, trigger type, and deal urgency.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-start gap-2 lg:items-end">
+            <span className="rounded-full border border-cyan-300/30 bg-slate-950/40 px-3 py-1 text-xs font-semibold text-cyan-300">
+              Automation Layer
             </span>
 
             {completedActionsCount > 0 && (
               <button
                 onClick={resetCompletedActions}
-                className="text-xs font-semibold text-slate-400 hover:text-white"
+                className="text-xs font-semibold text-slate-300 hover:text-white"
               >
                 Reset completed
               </button>
@@ -752,14 +805,14 @@ export function LeadsClient() {
         </div>
 
         {aiActionQueue.length === 0 ? (
-          <div className="mt-5 rounded-xl border border-slate-800 bg-slate-950 p-5">
-            <p className="text-sm text-slate-400">
-              No open leads need attention right now.
+          <div className="mt-5 rounded-2xl border border-white/10 bg-slate-950/50 p-5">
+            <p className="text-sm text-slate-300">
+              No open accounts need routing right now.
             </p>
 
             {completedActionsCount > 0 && (
               <p className="mt-2 text-xs text-slate-500">
-                {completedActionsCount} AI action
+                {completedActionsCount} automation action
                 {completedActionsCount === 1 ? "" : "s"} marked as done.
               </p>
             )}
@@ -769,11 +822,11 @@ export function LeadsClient() {
             {aiActionQueue.map((lead) => (
               <div
                 key={lead.id}
-                className="rounded-xl border border-slate-800 bg-slate-950 p-5"
+                className="rounded-2xl border border-white/10 bg-slate-950/50 p-5"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-widest text-cyan-400">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-300">
                       {getActionUrgency(lead)}
                     </p>
 
@@ -786,7 +839,7 @@ export function LeadsClient() {
                     </p>
                   </div>
 
-                  <span className="rounded-full bg-slate-800 px-3 py-1 text-xs font-semibold text-cyan-300">
+                  <span className="rounded-full border border-cyan-300/20 bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-300">
                     {lead.score}
                   </span>
                 </div>
@@ -798,28 +851,28 @@ export function LeadsClient() {
                 <div className="mt-4 flex flex-wrap gap-2">
                   <button
                     onClick={() => setSelectedLead(lead)}
-                    className="rounded-lg bg-slate-700 px-3 py-2 text-xs font-semibold text-white hover:bg-slate-600"
+                    className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white transition hover:border-cyan-300/30 hover:bg-cyan-400/10"
                   >
-                    View Lead
+                    View Record
                   </button>
 
                   <button
                     onClick={() => copyColdEmail(lead)}
-                    className="rounded-lg bg-cyan-400 px-3 py-2 text-xs font-semibold text-slate-950 hover:bg-cyan-300"
+                    className="rounded-lg bg-cyan-400 px-3 py-2 text-xs font-semibold text-slate-950 transition hover:bg-cyan-300"
                   >
                     {copiedEmailLeadId === lead.id ? "Copied" : "Copy Email"}
                   </button>
 
                   <button
                     onClick={() => openColdEmailDraft(lead)}
-                    className="rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold text-white hover:bg-blue-500"
+                    className="rounded-lg bg-blue-500/80 px-3 py-2 text-xs font-semibold text-white transition hover:bg-blue-400"
                   >
                     Open Draft
                   </button>
 
                   <button
                     onClick={() => markActionDone(lead.id)}
-                    className="rounded-lg border border-slate-700 px-3 py-2 text-xs font-semibold text-slate-300 hover:bg-slate-800"
+                    className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-slate-300 transition hover:bg-white/10"
                   >
                     Mark Done
                   </button>
@@ -831,32 +884,33 @@ export function LeadsClient() {
       </div>
 
       {selectedLead && (
-        <div className="mt-8 rounded-2xl border border-cyan-400/30 bg-slate-900 p-6">
-          <div className="flex items-start justify-between gap-6">
+        <div className="mt-8 rounded-3xl border border-cyan-300/30 bg-slate-950/70 p-6 shadow-2xl backdrop-blur-md">
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-widest text-cyan-400">
-                Lead Details
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300">
+                HubSpot Record Details
               </p>
 
               <h2 className="mt-2 text-2xl font-bold text-white">
                 {selectedLead.company}
               </h2>
 
-              <p className="mt-2 text-slate-400">
-                Detailed CRM profile, notes, activity timeline, and AI recommendation for this lead.
+              <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-300">
+                Detailed GTM profile, research notes, timeline, AI
+                recommendation, and suggested outbound message for this account.
               </p>
             </div>
 
             <button
               onClick={() => setSelectedLead(null)}
-              className="rounded-lg border border-slate-700 px-3 py-1 text-sm text-slate-300 hover:bg-slate-800"
+              className="rounded-lg border border-white/10 bg-white/5 px-3 py-1 text-sm text-slate-300 transition hover:bg-white/10"
             >
               Close
             </button>
           </div>
 
           <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <div className="rounded-xl border border-slate-800 bg-slate-950 p-4">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
               <p className="text-xs uppercase tracking-widest text-slate-500">
                 Contact
               </p>
@@ -865,7 +919,7 @@ export function LeadsClient() {
               </p>
             </div>
 
-            <div className="rounded-xl border border-slate-800 bg-slate-950 p-4">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
               <p className="text-xs uppercase tracking-widest text-slate-500">
                 Email
               </p>
@@ -874,16 +928,16 @@ export function LeadsClient() {
               </p>
             </div>
 
-            <div className="rounded-xl border border-slate-800 bg-slate-950 p-4">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
               <p className="text-xs uppercase tracking-widest text-slate-500">
-                Stage
+                HubSpot Stage
               </p>
               <p className="mt-2 font-semibold text-white">
                 {selectedLead.stage}
               </p>
             </div>
 
-            <div className="rounded-xl border border-slate-800 bg-slate-950 p-4">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
               <p className="text-xs uppercase tracking-widest text-slate-500">
                 Deal Value
               </p>
@@ -893,30 +947,30 @@ export function LeadsClient() {
             </div>
           </div>
 
-          <div className="mt-4 rounded-xl border border-slate-800 bg-slate-950 p-4">
+          <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
             <p className="text-xs uppercase tracking-widest text-slate-500">
-              Lead Notes
+              Research Notes
             </p>
 
             <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-slate-300">
               {selectedLead.notes?.trim()
                 ? selectedLead.notes
-                : "No notes added yet. Click Edit to add discovery notes, pain points, next steps, or decision-maker context."}
+                : "No research notes added yet. Click Edit to add Claygent findings, buying triggers, pain points, next steps, or decision-maker context."}
             </p>
           </div>
 
-          <div className="mt-4 rounded-xl border border-slate-800 bg-slate-950 p-5">
+          <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-5">
             <div className="flex items-center justify-between gap-4">
               <div>
                 <p className="text-xs uppercase tracking-widest text-slate-500">
-                  Activity Timeline
+                  GTM Timeline
                 </p>
                 <h3 className="mt-2 text-lg font-bold text-white">
-                  Latest lead activity
+                  Latest account activity
                 </h3>
               </div>
 
-              <span className="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-400">
+              <span className="rounded-full border border-white/10 bg-slate-950/50 px-3 py-1 text-xs font-semibold text-slate-300">
                 Auto-generated
               </span>
             </div>
@@ -925,16 +979,16 @@ export function LeadsClient() {
               {getActivityTimeline(selectedLead).map((activity, index) => (
                 <div key={activity.title} className="flex gap-4">
                   <div className="flex flex-col items-center">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full border border-cyan-400/30 bg-cyan-400/10 text-xs font-bold text-cyan-300">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full border border-cyan-300/30 bg-cyan-400/10 text-xs font-bold text-cyan-300">
                       {index + 1}
                     </div>
 
                     {index !== getActivityTimeline(selectedLead).length - 1 && (
-                      <div className="h-full w-px bg-slate-800" />
+                      <div className="h-full w-px bg-white/10" />
                     )}
                   </div>
 
-                  <div className="flex-1 rounded-xl border border-slate-800 bg-slate-900 p-4">
+                  <div className="flex-1 rounded-2xl border border-white/10 bg-slate-950/50 p-4">
                     <div className="flex flex-wrap items-center justify-between gap-3">
                       <h4 className="font-semibold text-white">
                         {activity.title}
@@ -949,7 +1003,7 @@ export function LeadsClient() {
                       </span>
                     </div>
 
-                    <p className="mt-2 text-sm leading-6 text-slate-400">
+                    <p className="mt-2 text-sm leading-6 text-slate-300">
                       {activity.description}
                     </p>
                   </div>
@@ -958,15 +1012,15 @@ export function LeadsClient() {
             </div>
           </div>
 
-          <div className="mt-4 rounded-xl border border-slate-800 bg-slate-950 p-4">
+          <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
             <p className="text-xs uppercase tracking-widest text-slate-500">
-              AI Lead Score
+              ICP Score
             </p>
 
             <div className="mt-3 flex items-center gap-4">
-              <div className="h-3 flex-1 overflow-hidden rounded-full bg-slate-800">
+              <div className="h-3 flex-1 overflow-hidden rounded-full bg-white/10">
                 <div
-                  className="h-full rounded-full bg-cyan-400"
+                  className="h-full rounded-full bg-cyan-300"
                   style={{ width: `${selectedLead.score}%` }}
                 />
               </div>
@@ -977,11 +1031,11 @@ export function LeadsClient() {
             </div>
           </div>
 
-          <div className="mt-4 rounded-xl border border-cyan-400/20 bg-cyan-400/5 p-5">
+          <div className="mt-4 rounded-2xl border border-cyan-300/20 bg-cyan-400/10 p-5">
             <div className="flex items-center justify-between gap-4">
               <div>
-                <p className="text-xs uppercase tracking-widest text-cyan-400">
-                  AI Recommendation
+                <p className="text-xs uppercase tracking-widest text-cyan-300">
+                  GTM Recommendation
                 </p>
 
                 <h3 className="mt-2 text-xl font-bold text-white">
@@ -989,7 +1043,7 @@ export function LeadsClient() {
                 </h3>
               </div>
 
-              <span className="rounded-full border border-cyan-400/30 px-3 py-1 text-xs font-semibold text-cyan-300">
+              <span className="rounded-full border border-cyan-300/30 bg-slate-950/40 px-3 py-1 text-xs font-semibold text-cyan-300">
                 RevenueOS AI
               </span>
             </div>
@@ -998,7 +1052,7 @@ export function LeadsClient() {
               {getAiInsight(selectedLead)}
             </p>
 
-            <div className="mt-4 rounded-xl border border-slate-800 bg-slate-950 p-4">
+            <div className="mt-4 rounded-2xl border border-white/10 bg-slate-950/50 p-4">
               <p className="text-xs uppercase tracking-widest text-slate-500">
                 Next Best Action
               </p>
@@ -1009,8 +1063,8 @@ export function LeadsClient() {
             </div>
           </div>
 
-          <div className="mt-4 rounded-xl border border-slate-800 bg-slate-950 p-5">
-            <div className="flex items-center justify-between gap-4">
+          <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-5">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
                 <p className="text-xs uppercase tracking-widest text-slate-500">
                   AI Cold Email
@@ -1024,7 +1078,7 @@ export function LeadsClient() {
               <div className="flex flex-wrap gap-2">
                 <button
                   onClick={() => copyColdEmail(selectedLead)}
-                  className="rounded-lg bg-cyan-400 px-3 py-2 text-xs font-semibold text-slate-950 hover:bg-cyan-300"
+                  className="rounded-lg bg-cyan-400 px-3 py-2 text-xs font-semibold text-slate-950 transition hover:bg-cyan-300"
                 >
                   {copiedEmailLeadId === selectedLead.id
                     ? "Copied"
@@ -1033,33 +1087,33 @@ export function LeadsClient() {
 
                 <button
                   onClick={() => openColdEmailDraft(selectedLead)}
-                  className="rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold text-white hover:bg-blue-500"
+                  className="rounded-lg bg-blue-500/80 px-3 py-2 text-xs font-semibold text-white transition hover:bg-blue-400"
                 >
                   Open Draft
                 </button>
               </div>
             </div>
 
-            <pre className="mt-4 whitespace-pre-wrap rounded-xl border border-slate-800 bg-slate-900 p-4 text-sm leading-6 text-slate-300">
+            <pre className="mt-4 whitespace-pre-wrap rounded-2xl border border-white/10 bg-slate-950/50 p-4 text-sm leading-6 text-slate-300">
               {getColdEmail(selectedLead)}
             </pre>
           </div>
         </div>
       )}
 
-      <div className="mt-8">
+      <div className="mt-8 rounded-3xl border border-white/10 bg-slate-950/60 p-6 shadow-2xl backdrop-blur-md">
         <div className="mb-4 grid gap-4 md:grid-cols-[1fr_220px_220px]">
           <input
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search leads by company, contact, email, stage, or notes..."
-            className="w-full rounded-xl border border-slate-800 bg-slate-900 p-3 text-sm text-white outline-none placeholder:text-slate-500"
+            placeholder="Search by company, contact, email, HubSpot stage, or research notes..."
+            className="w-full rounded-xl border border-white/10 bg-slate-950/70 p-3 text-sm text-white outline-none placeholder:text-slate-500 focus:border-cyan-300/40"
           />
 
           <select
             value={stageFilter}
             onChange={(e) => setStageFilter(e.target.value)}
-            className="w-full rounded-xl border border-slate-800 bg-slate-900 p-3 text-sm text-white outline-none"
+            className="w-full rounded-xl border border-white/10 bg-slate-950/70 p-3 text-sm text-white outline-none focus:border-cyan-300/40"
           >
             <option>All Stages</option>
             <option>New Lead</option>
@@ -1072,7 +1126,7 @@ export function LeadsClient() {
           <select
             value={scoreFilter}
             onChange={(e) => setScoreFilter(e.target.value)}
-            className="w-full rounded-xl border border-slate-800 bg-slate-900 p-3 text-sm text-white outline-none"
+            className="w-full rounded-xl border border-white/10 bg-slate-950/70 p-3 text-sm text-white outline-none focus:border-cyan-300/40"
           >
             <option>All Scores</option>
             <option>80+ Hot Leads</option>
@@ -1082,20 +1136,20 @@ export function LeadsClient() {
         </div>
 
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-slate-300">
             Showing{" "}
             <span className="font-semibold text-white">
               {filteredLeads.length}
             </span>{" "}
             of <span className="font-semibold text-white">{leads.length}</span>{" "}
-            leads
+            GTM records
           </p>
 
           <div className="flex flex-wrap gap-2">
             {hasActiveFilters && (
               <button
                 onClick={clearFilters}
-                className="rounded-lg border border-slate-700 px-3 py-2 text-xs font-semibold text-slate-300 hover:bg-slate-800"
+                className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-slate-300 transition hover:bg-white/10"
               >
                 Clear Filters
               </button>
@@ -1103,12 +1157,12 @@ export function LeadsClient() {
 
             <button
               onClick={exportVisibleLeads}
-              className="rounded-lg bg-cyan-400 px-3 py-2 text-xs font-semibold text-slate-950 hover:bg-cyan-300"
+              className="rounded-lg bg-cyan-400 px-3 py-2 text-xs font-semibold text-slate-950 transition hover:bg-cyan-300"
             >
               Export CSV
             </button>
 
-            <label className="cursor-pointer rounded-lg border border-cyan-400/30 px-3 py-2 text-xs font-semibold text-cyan-300 hover:bg-cyan-400/10">
+            <label className="cursor-pointer rounded-lg border border-cyan-300/30 bg-cyan-400/10 px-3 py-2 text-xs font-semibold text-cyan-300 transition hover:bg-cyan-400/15">
               Import CSV
               <input
                 type="file"
@@ -1121,16 +1175,16 @@ export function LeadsClient() {
             <a
               href="/sample-leads.csv"
               download
-              className="rounded-lg border border-slate-700 px-3 py-2 text-xs font-semibold text-slate-300 hover:bg-slate-800"
+              className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-slate-300 transition hover:bg-white/10"
             >
               Download Sample CSV
             </a>
 
             <button
               onClick={resetCrmData}
-              className="rounded-lg border border-red-500/30 px-3 py-2 text-xs font-semibold text-red-300 hover:bg-red-500/10"
+              className="rounded-lg border border-red-400/30 bg-red-500/10 px-3 py-2 text-xs font-semibold text-red-200 transition hover:bg-red-500/15"
             >
-              Reset CRM Data
+              Reset Workspace
             </button>
           </div>
         </div>
