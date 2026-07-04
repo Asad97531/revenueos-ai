@@ -6,6 +6,7 @@ const googleSansFlex = Google_Sans_Flex({
   variable: "--font-google-sans-flex",
   subsets: ["latin"],
   display: "swap",
+  adjustFontFallback: false,
 });
 
 const geistMono = Geist_Mono({
