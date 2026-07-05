@@ -109,6 +109,13 @@ export default function HomePage() {
             </a>
 
             <a
+              href="/case-study"
+              className="rounded-full border border-cyan-300/30 bg-cyan-400/10 px-5 py-3 text-xs font-semibold uppercase tracking-widest text-cyan-300 transition hover:bg-cyan-400/15"
+            >
+              Case Study
+            </a>
+
+            <a
               href="https://github.com/Asad97531/revenueos-ai"
               target="_blank"
               rel="noreferrer"
@@ -153,6 +160,13 @@ export default function HomePage() {
                 className="rounded-full bg-cyan-400 px-6 py-4 text-sm font-semibold uppercase tracking-widest text-slate-950 transition hover:bg-cyan-300"
               >
                 View GTM Dashboard
+              </a>
+
+              <a
+                href="/case-study"
+                className="rounded-full border border-cyan-300/30 bg-cyan-400/10 px-6 py-4 text-sm font-semibold uppercase tracking-widest text-cyan-300 transition hover:bg-cyan-400/15"
+              >
+                Read Case Study
               </a>
 
               <a
@@ -256,7 +270,7 @@ export default function HomePage() {
 
               <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-300">
                 The homepage explains the workflow at a high level. The
-                dashboard shows each GTM layer in detail.
+                dashboard and case study show each GTM layer in detail.
               </p>
             </div>
 
@@ -395,7 +409,8 @@ export default function HomePage() {
               <p className="mt-4 max-w-3xl text-sm leading-6 text-slate-300">
                 Start with the dashboard summary, review the Clay research
                 layer, check the Make.com workflow logic, inspect the HubSpot
-                CRM workspace, and review the revenue dashboard.
+                CRM workspace, read the case study, and review the revenue
+                dashboard.
               </p>
             </div>
 
@@ -405,6 +420,13 @@ export default function HomePage() {
                 className="rounded-full bg-cyan-400 px-5 py-3 text-xs font-semibold uppercase tracking-widest text-slate-950 transition hover:bg-cyan-300"
               >
                 Open Dashboard
+              </a>
+
+              <a
+                href="/case-study"
+                className="rounded-full border border-cyan-300/30 bg-cyan-400/10 px-5 py-3 text-xs font-semibold uppercase tracking-widest text-cyan-300 transition hover:bg-cyan-400/15"
+              >
+                Read Case Study
               </a>
 
               <a
