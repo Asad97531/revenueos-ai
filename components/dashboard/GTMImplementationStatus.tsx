@@ -14,6 +14,20 @@ const implementationItems = [
       "Leads can be added, edited, deleted, filtered, imported, exported, and persisted locally for the demo.",
   },
   {
+    title: "HubSpot CRM Proof",
+    tool: "HubSpot",
+    status: "Tested",
+    description:
+      "RevenueOS demo contacts were imported into a real HubSpot CRM workspace with GTM fields like ICP Score and Sales Priority.",
+  },
+  {
+    title: "Make.com Webhook",
+    tool: "Make.com",
+    status: "Tested",
+    description:
+      "A Make.com webhook was created and tested to receive RevenueOS hot-lead data from a sample GTM payload.",
+  },
+  {
     title: "Clay Enrichment Layer",
     tool: "Clay",
     status: "Simulated",
@@ -21,58 +35,44 @@ const implementationItems = [
       "The current version shows mock Clay enrichment fields, Claygent research prompts, buying triggers, and ICP scoring.",
   },
   {
-    title: "Workflow Orchestration",
-    tool: "Make.com",
-    status: "Simulated",
-    description:
-      "The current version shows the automation logic for lead capture, Clay enrichment, Slack alerts, and HubSpot updates.",
-  },
-  {
-    title: "CRM Source of Truth",
-    tool: "HubSpot",
-    status: "Simulated",
-    description:
-      "The dashboard shows HubSpot objects, custom properties, deal tracking, lifecycle stages, and revenue reporting logic.",
-  },
-  {
     title: "Slack Alerts",
     tool: "Slack",
-    status: "Simulated",
+    status: "Planned",
     description:
-      "The workflow includes a sample Slack alert for high-intent leads with ICP score, trigger reason, and next action.",
+      "The workflow includes a sample Slack alert preview. A real Slack alert workflow can be connected in the next phase.",
   },
 ];
 
 const nextBuildSteps = [
   {
     phase: "Phase 1",
-    title: "Finish portfolio-ready mock system",
+    title: "Portfolio-ready mock system",
     details:
       "Complete the visual dashboard, explain all GTM layers, and make the demo easy to understand for recruiters.",
   },
   {
     phase: "Phase 2",
-    title: "Set up HubSpot custom properties",
+    title: "HubSpot CRM proof of concept",
     details:
-      "Create CRM fields like ICP Score, Trigger Type, Clay Research Summary, Sales Priority, and Next Best Action.",
+      "Import RevenueOS demo contacts into HubSpot and show GTM fields like ICP Score, Sales Priority, Trigger Type, and Next Best Action.",
   },
   {
     phase: "Phase 3",
-    title: "Create Clay enrichment table",
+    title: "Make.com webhook prototype",
     details:
-      "Build a Clay table that accepts company domains, enriches account data, and runs Claygent research prompts.",
+      "Create a Make.com webhook that receives hot-lead data from the RevenueOS workflow.",
   },
   {
     phase: "Phase 4",
-    title: "Connect Make.com automation",
+    title: "Connect full automation",
     details:
-      "Use Make.com to connect lead capture, Clay enrichment, Slack alerts, HubSpot tasks, and HubSpot deal creation.",
+      "Connect Make.com to HubSpot create/update contact, Slack alerts, and HubSpot task or deal creation.",
   },
   {
     phase: "Phase 5",
-    title: "Record demo and update README",
+    title: "Record demo and update applications",
     details:
-      "Create a short Loom demo, update GitHub README, and explain the system as a GTM Engineer portfolio project.",
+      "Create a short Loom demo, update GitHub README, and use the project in job applications and interviews.",
   },
 ];
 
@@ -81,8 +81,16 @@ function getStatusStyles(status: string) {
     return "border-green-400/30 bg-green-500/10 text-green-200";
   }
 
+  if (status === "Tested") {
+    return "border-cyan-400/30 bg-cyan-500/10 text-cyan-200";
+  }
+
   if (status === "Simulated") {
     return "border-yellow-400/30 bg-yellow-500/10 text-yellow-200";
+  }
+
+  if (status === "Planned") {
+    return "border-slate-400/30 bg-slate-500/10 text-slate-200";
   }
 
   return "border-white/10 bg-white/5 text-slate-300";
@@ -98,13 +106,13 @@ export function GTMImplementationStatus() {
           </p>
 
           <h2 className="mt-2 text-2xl font-bold text-white md:text-3xl">
-            What is built now and what will be connected next
+            What is built, tested, simulated, and planned
           </h2>
 
           <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-300">
-            This section makes the project transparent. The current dashboard is
-            a portfolio-ready GTM simulation, and the next phases will connect
-            real Clay, Make.com, Slack, and HubSpot workflows.
+            This section makes the project transparent. The dashboard is a
+            portfolio-ready GTM simulation, and the project now includes a real
+            HubSpot CRM proof-of-concept plus a Make.com webhook prototype.
           </p>
 
           <div className="mt-6 grid gap-4 md:grid-cols-2">
@@ -151,8 +159,8 @@ export function GTMImplementationStatus() {
           </h3>
 
           <p className="mt-3 text-sm leading-6 text-slate-300">
-            These phases show the path from portfolio demo to real GTM workflow
-            using Clay, Make.com, Slack, and HubSpot.
+            These phases show the path from portfolio dashboard to real GTM
+            workflow using HubSpot, Make.com, Slack, and Clay.
           </p>
 
           <div className="mt-6 space-y-4">
@@ -192,9 +200,9 @@ export function GTMImplementationStatus() {
 
             <p className="mt-2 text-sm leading-6 text-slate-200">
               “I first built a working GTM dashboard with mock data to prove the
-              workflow logic. Then I planned the real integrations: Clay for
-              enrichment, Make.com for orchestration, Slack for alerts, and
-              HubSpot as the CRM source of truth.”
+              workflow logic. Then I tested the workflow with real GTM tools by
+              importing RevenueOS contacts into HubSpot and creating a Make.com
+              webhook to receive hot-lead data.”
             </p>
           </div>
         </div>
