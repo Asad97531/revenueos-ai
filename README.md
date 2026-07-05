@@ -216,6 +216,26 @@ Sample CSV path:
 ```text
 /public/sample-leads.csv
 ```
+## Real HubSpot CRM Proof of Concept
+
+I also tested RevenueOS AI with a real HubSpot CRM setup.
+
+What was completed:
+
+- Created a free HubSpot CRM workspace for RevenueOS AI
+- Imported RevenueOS demo contacts into HubSpot
+- Added GTM-style contact fields such as ICP Score and Sales Priority
+- Imported realistic GTM records including ScaleDesk, Acme SaaS, Northstar AI, BrightCart, CloudOpsly, and RevPilot
+- Created a Make.com webhook prototype to receive hot-lead data from the RevenueOS workflow
+- Tested webhook data with a sample hot lead payload
+
+Example workflow tested:
+
+```text
+RevenueOS AI Hot Lead
+-> Make.com Webhook
+-> HubSpot CRM Contact
+-> Future step: Slack alert and automated task creation
 
 ## Current Implementation Status
 
