@@ -1,83 +1,104 @@
+const proofPoints = [
+  "Built with Next.js, TypeScript, Tailwind CSS, and local demo data",
+  "Shows Clay-style enrichment, Claygent research, and ICP scoring",
+  "Explains Make.com workflow orchestration with Slack and HubSpot actions",
+  "Uses HubSpot as the CRM source of truth for contacts, companies, deals, and revenue",
+];
+
+const nextSteps = [
+  "Connect real HubSpot custom properties",
+  "Create Clay enrichment table",
+  "Build Make.com webhook workflow",
+  "Record demo video and update README",
+];
+
 export function PortfolioCTA() {
   return (
-    <section className="rounded-2xl border border-cyan-400/20 bg-cyan-400/5 p-6">
-      <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+    <section className="overflow-hidden rounded-3xl border border-cyan-300/20 bg-cyan-400/10 p-6 shadow-2xl backdrop-blur-md lg:p-8">
+      <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-widest text-cyan-300">
-            Portfolio Project
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300">
+            Portfolio Summary
           </p>
 
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-white">
-            RevenueOS AI is ready for recruiter review
+          <h2 className="mt-3 text-3xl font-bold leading-tight text-white md:text-4xl">
+            RevenueOS AI is now positioned as a GTM Engineer portfolio project
           </h2>
 
-          <p className="mt-4 max-w-3xl text-sm leading-6 text-slate-300">
-            This project demonstrates frontend development, SaaS dashboard
-            design, CRM workflows, sales operations thinking, AI-style account
-            insights, CSV data handling, and responsive UI implementation.
+          <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-300">
+            This project demonstrates how a GTM Engineer can combine data
+            enrichment, workflow automation, CRM architecture, and revenue
+            reporting into one operating system for sales teams.
           </p>
 
-          <div className="mt-6 flex flex-wrap gap-3">
+          <div className="mt-6 grid gap-3 sm:grid-cols-2">
+            {proofPoints.map((point) => (
+              <div
+                key={point}
+                className="rounded-2xl border border-white/10 bg-slate-950/50 p-4"
+              >
+                <p className="text-sm leading-6 text-slate-200">{point}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-7 flex flex-wrap gap-3">
             <a
-              href="https://revenueos-ai-seven.vercel.app/dashboard"
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full bg-cyan-400 px-5 py-3 text-xs font-semibold uppercase tracking-widest text-slate-950 transition hover:bg-cyan-300"
+              href="#crm-workspace"
+              className="rounded-xl bg-cyan-400 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300"
             >
-              Open Live Dashboard
+              View GTM Workspace
             </a>
 
             <a
-              href="https://github.com/Asad97531/revenueos-ai"
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full border border-slate-700 px-5 py-3 text-xs font-semibold uppercase tracking-widest text-slate-300 transition hover:border-cyan-400/50 hover:bg-cyan-400/10 hover:text-cyan-300"
+              href="#implementation-status"
+              className="rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
             >
-              View GitHub
-            </a>
-
-            <a
-              href="/sample-leads.csv"
-              download
-              className="rounded-full border border-slate-700 px-5 py-3 text-xs font-semibold uppercase tracking-widest text-slate-300 transition hover:border-cyan-400/50 hover:bg-cyan-400/10 hover:text-cyan-300"
-            >
-              Download Sample CSV
+              See Build Roadmap
             </a>
           </div>
         </div>
 
-        <div className="rounded-2xl border border-slate-800 bg-slate-950 p-5">
-          <p className="text-sm font-semibold text-white">
-            Best review path
+        <div className="rounded-3xl border border-white/10 bg-slate-950/50 p-6">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300">
+            Interview Pitch
           </p>
 
-          <div className="mt-4 space-y-3">
-            <div className="rounded-xl border border-slate-800 bg-slate-900 p-4">
-              <p className="text-xs uppercase tracking-widest text-cyan-300">
-                Step 1
-              </p>
-              <p className="mt-1 text-sm text-slate-300">
-                Open the live dashboard.
-              </p>
-            </div>
+          <p className="mt-4 text-sm leading-7 text-slate-200">
+            “I built RevenueOS AI as a GTM automation engine. It simulates how
+            inbound or target accounts can be enriched in Clay, researched with
+            Claygent, routed through Make.com, alerted in Slack, and tracked in
+            HubSpot from first touch to pipeline.”
+          </p>
 
-            <div className="rounded-xl border border-slate-800 bg-slate-900 p-4">
-              <p className="text-xs uppercase tracking-widest text-cyan-300">
-                Step 2
-              </p>
-              <p className="mt-1 text-sm text-slate-300">
-                Test the CRM workspace with sample CSV data.
-              </p>
-            </div>
+          <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+              Next Build Steps
+            </p>
 
-            <div className="rounded-xl border border-slate-800 bg-slate-900 p-4">
-              <p className="text-xs uppercase tracking-widest text-cyan-300">
-                Step 3
-              </p>
-              <p className="mt-1 text-sm text-slate-300">
-                Review the GitHub repo and component structure.
-              </p>
+            <div className="mt-4 space-y-3">
+              {nextSteps.map((step, index) => (
+                <div key={step} className="flex gap-3">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-cyan-300/25 bg-cyan-400/10 text-xs font-bold text-cyan-300">
+                    {index + 1}
+                  </span>
+
+                  <p className="text-sm leading-6 text-slate-300">{step}</p>
+                </div>
+              ))}
             </div>
+          </div>
+
+          <div className="mt-5 rounded-2xl border border-cyan-300/20 bg-cyan-400/10 p-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-300">
+              Recruiter Takeaway
+            </p>
+
+            <p className="mt-2 text-sm leading-6 text-slate-200">
+              This is not only a dashboard. It is a full GTM workflow concept
+              covering enrichment, orchestration, CRM operations, and revenue
+              reporting.
+            </p>
           </div>
         </div>
       </div>

@@ -1,6 +1,9 @@
 Company,Contact,Email,Stage,Score,Value,Notes
-Acme Software,Rahul Sharma,rahul@acme.com,New Lead,82,$25K,Interested in automation and faster follow-ups
-CloudKart,Priya Singh,priya@cloudkart.com,Proposal,90,₹25L,Asked for pricing details and implementation timeline
-GrowthLabs,Aman Verma,aman@growthlabs.com,Qualified,76,₹1Cr,Wants a demo next week with the sales team
-Nova Retail,Sneha Kapoor,sneha@novaretail.com,Negotiation,88,₹40L,Concerned about onboarding time and team training
-ScaleHub,Arjun Mehta,arjun@scalehub.com,New Lead,69,$15K,Needs qualification call to understand current CRM workflow
+"Acme SaaS","Sarah Khan","sarah@acmesaas.com","Qualified","91","₹4.8L","Claygent found that Acme SaaS is hiring 4 SDRs and 1 RevOps Manager. This suggests the company is scaling outbound sales and may need better lead enrichment, routing, and HubSpot workflow automation."
+"Northstar AI","David Mehta","david@northstar.ai","Proposal","86","₹3.2L","Clay research found recent funding news and a new Head of Sales hire. The account is likely investing in GTM growth and may need automated account research and CRM hygiene."
+"BrightCart","Ananya Rao","ananya@brightcart.io","New Lead","79","₹2.4L","Claygent found e-commerce expansion signals and new marketplace hiring. Suggested angle: help the team prioritize high-fit merchants and route inbound leads faster."
+"CloudOpsly","Rohan Iyer","rohan@cloudopsly.com","Negotiation","88","₹5.6L","Clay enrichment shows a new RevOps leader joined recently. The account has an active deal signal and should be followed up with a HubSpot timeline and clear next steps."
+"ScaleDesk","Priya Menon","priya@scaledesk.co","Qualified","93","₹6.1L","High-intent website visit detected. The contact viewed the pricing page and GTM automation page. Recommended action: send Slack alert, create HubSpot task, and follow up today."
+"RevPilot","Arjun Nair","arjun@revpilot.io","New Lead","72","₹1.8L","Clay enrichment found a small but growing SaaS team. No strong trigger yet. Needs more Claygent research around hiring activity, sales team size, and current GTM motion."
+"MarketLoop","Neha Kapoor","neha@marketloop.ai","Proposal","84","₹3.9L","Recent product launch found through Claygent. The company may need better lead routing and campaign-to-revenue tracking inside HubSpot."
+"DataNest","Vikram Sinha","vikram@datanest.com","Closed","89","₹4.5L","Closed-won account. Good candidate for onboarding workflow, expansion tracking, referral motion, and future customer success automation."

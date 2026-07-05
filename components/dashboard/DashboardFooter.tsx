@@ -1,65 +1,68 @@
+const footerLinks = [
+  {
+    label: "Clay Research",
+    href: "#clay-research-engine",
+  },
+  {
+    label: "Workflow Orchestration",
+    href: "#workflow-orchestration",
+  },
+  {
+    label: "HubSpot CRM",
+    href: "#hubspot-source-of-truth",
+  },
+  {
+    label: "Revenue Dashboard",
+    href: "#revenue-engine-dashboard",
+  },
+];
+
 export function DashboardFooter() {
   return (
-    <footer className="border-t border-slate-800 py-8">
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+    <footer className="rounded-3xl border border-white/10 bg-slate-950/60 p-6 shadow-2xl backdrop-blur-md">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <p className="text-sm font-semibold text-white">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300">
             RevenueOS AI
           </p>
 
-          <p className="mt-2 text-sm text-slate-500">
-            Built by Asad Ali as a portfolio-ready RevOps and CRM dashboard.
+          <h2 className="mt-2 text-xl font-bold text-white">
+            GTM Automation Engine Portfolio Project
+          </h2>
+
+          <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-300">
+            A portfolio-ready GTM system showing Clay enrichment, Claygent
+            research, Make.com workflow orchestration, Slack alerts, HubSpot CRM
+            tracking, and revenue dashboarding.
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-3">
-          <a
-            href="https://revenueos-ai-seven.vercel.app/dashboard"
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-full border border-slate-700 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-slate-300 transition hover:border-cyan-400/50 hover:bg-cyan-400/10 hover:text-cyan-300"
-          >
-            Live Dashboard
-          </a>
-
-          <a
-            href="https://github.com/Asad97531/revenueos-ai"
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-full border border-slate-700 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-slate-300 transition hover:border-cyan-400/50 hover:bg-cyan-400/10 hover:text-cyan-300"
-          >
-            GitHub
-          </a>
-
-          <a
-            href="#top"
-            className="rounded-full bg-cyan-400 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-slate-950 transition hover:bg-cyan-300"
-          >
-            Back to Top
-          </a>
-        </div>
+        <a
+          href="#hero"
+          className="w-fit rounded-xl border border-cyan-300/30 bg-cyan-400/10 px-5 py-3 text-sm font-semibold text-cyan-300 transition hover:bg-cyan-400/15"
+        >
+          Back to top
+        </a>
       </div>
 
-      <div className="mt-6 flex flex-wrap gap-2">
-        <span className="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-400">
-          Next.js
-        </span>
+      <div className="mt-6 flex flex-wrap gap-3">
+        {footerLinks.map((link) => (
+          <a
+            key={link.href}
+            href={link.href}
+            className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-slate-300 transition hover:border-cyan-300/30 hover:text-cyan-200"
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
 
-        <span className="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-400">
-          TypeScript
-        </span>
-
-        <span className="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-400">
-          Tailwind CSS
-        </span>
-
-        <span className="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-400">
-          CRM Workflow
-        </span>
-
-        <span className="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-400">
-          AI-style Insights
-        </span>
+      <div className="mt-6 border-t border-white/10 pt-5">
+        <p className="text-xs leading-5 text-slate-500">
+          Built as a GTM Engineer portfolio project using Next.js, TypeScript,
+          Tailwind CSS, mock GTM data, and planned integrations with Clay,
+          Make.com, Slack, and HubSpot.
+        </p>
       </div>
     </footer>
   );
