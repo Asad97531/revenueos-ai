@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import { Google_Sans_Flex, Geist_Mono } from "next/font/google";
+import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const googleSansFlex = Google_Sans_Flex({
-  variable: "--font-google-sans-flex",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
-  adjustFontFallback: false,
 });
 
 const geistMono = Geist_Mono({
@@ -29,7 +28,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${googleSansFlex.variable} ${geistMono.variable} ${googleSansFlex.className} h-full antialiased`}
+      className={`${inter.variable} ${geistMono.variable} ${inter.className} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
