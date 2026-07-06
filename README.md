@@ -10,6 +10,8 @@ Live App: https://revenueos-ai-seven.vercel.app/
 
 Dashboard: https://revenueos-ai-seven.vercel.app/dashboard
 
+Case Study: https://revenueos-ai-seven.vercel.app/case-study
+
 GitHub Repository: https://github.com/Asad97531/revenueos-ai
 
 ## Project Positioning
@@ -334,6 +336,20 @@ Interview explanation:
 ```text
 I built RevenueOS AI as a GTM automation engine. It simulates how inbound or target accounts can be enriched in Clay, researched with Claygent, routed through Make.com, alerted in Slack, and tracked in HubSpot from first touch to pipeline.
 ```
+## Case Study Page
+
+I added a dedicated case study page to explain the project clearly for recruiters and hiring managers.
+
+The case study covers:
+
+- The problem RevenueOS AI solves
+- The GTM workflow from lead capture to revenue tracking
+- Clay-style enrichment and Claygent-style research
+- Make.com-style automation logic
+- HubSpot CRM proof of concept
+- What is built, tested, simulated, and planned
+
+Case Study: https://revenueos-ai-seven.vercel.app/case-study
 
 ## Recruiter Takeaway
 
